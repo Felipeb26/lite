@@ -19,6 +19,8 @@ spring:
   datasource:
     url: jdbc:sqlite:src/main/resources/main.db
     driver-class-name: org.sqlite.JDBC
+    hikari:
+       maximum-pool-size: 1
   jpa:
     database-platform: com.bats.lite.dialect.SQLiteDialect
     show-sql: true

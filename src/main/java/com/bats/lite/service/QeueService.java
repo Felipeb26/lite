@@ -17,20 +17,21 @@ public class QeueService {
 	public String saveLog(String email) {
 		try {
 			var lista = repository.findAll();
+			long id = lista.stream().count() + 1;
 			var isValid = service.validEmail(email);
 			final String message;
 			if (isValid) {
-				var warn = service.sendEmailSubject(email, "Primeiro Cadastro!");
-				if(warn.endsWith("sucesso")){
+				var warn = service.sendMail(email, "Primeiro Cadastro!");
+				if (warn.endsWith("sucesso")) {
 					message = String.format("%s email enviado com sucesso", email);
-				}else{
+				} else {
 					message = warn;
 				}
 			} else {
 				message = String.format("%s email não é valido", email);
 			}
 
-			QeueEntity qeue = QeueEntity.builder().id(lista.stream().count() + 1).valid(isValid).message(message).build();
+			QeueEntity qeue = QeueEntity.builder().id(id).valid(isValid).message(message).build();
 			repository.save(qeue);
 			return message;
 		} catch (Exception e) {
