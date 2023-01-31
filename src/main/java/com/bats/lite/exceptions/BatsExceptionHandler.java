@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static java.util.Objects.nonNull;
 @ControllerAdvice
 public class BatsExceptionHandler {
 
@@ -20,10 +17,10 @@ public class BatsExceptionHandler {
 
 		PersonalException exception = PersonalException.builder()
 			.message(e.getReason())
-			.status(nonNull(e.getStatus()) ? BAD_REQUEST : e.getStatus())
+			.status(e.getStatus())
 			.timestamp(dateTime.format(formatter))
 			.throwable(e.getCause())
 			.build();
-		return ResponseEntity.status(BAD_REQUEST).body(exception);
+		return ResponseEntity.status(e.getStatus()).body(exception);
 	}
 }

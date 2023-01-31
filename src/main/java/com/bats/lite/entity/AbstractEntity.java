@@ -5,11 +5,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.PrePersist;
+import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -17,9 +14,12 @@ import java.time.format.DateTimeFormatter;
 @Data
 @MappedSuperclass
 @JsonIgnoreProperties(value = {"dataCadastro"}, allowGetters = true)
-@EqualsAndHashCode(of = {"dataCadastro"})
+@EqualsAndHashCode(of = {"id"})
 public class AbstractEntity<T> implements Serializable {
-
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id", nullable = false, updatable = false)
+	private Long id;
 	@Column(nullable = false, updatable = false)
 	@CreatedDate
 	protected String dataCadastro;

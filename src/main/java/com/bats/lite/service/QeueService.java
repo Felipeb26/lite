@@ -13,7 +13,6 @@ public class QeueService {
 
 	private final QeueRepository repository;
 	private final EmailService service;
-
 	public String saveLog(String email) {
 		try {
 			var lista = repository.findAll();
