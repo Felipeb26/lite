@@ -75,11 +75,9 @@ public class UserService {
 		Specification<User> where = Specification.where(UserSpecification.emailEquals(user.getEmail()));
 		var list = repository.findAll(where);
 
-		var size = repository.findAll();
-
 		if (list.isEmpty()) {
 			var usuario = mapper.toEntity(user);
-//			template.convertAndSend("usuario.cadastrado", usuario);
+			template.convertAndSend("usuario.cadastrado", usuario);
 			return repository.save(usuario);
 		}
 		throw new BatsException(BAD_REQUEST, "Email já cadastrado");

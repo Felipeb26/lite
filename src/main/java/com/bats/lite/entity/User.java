@@ -18,16 +18,17 @@ import java.util.List;
 @NoArgsConstructor
 public class User extends AbstractEntity<User> {
 
-	private String nome;
-	private String email;
-	private String senha;
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	private LocalDate nascimento;
-	@Enumerated(EnumType.STRING)
-	private Roles roles;
+    private String nome;
+    @Column(unique = true, nullable = false)
+    private String email;
+    private String senha;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate nascimento;
+    @Enumerated(EnumType.STRING)
+    private Roles roles;
 
-//	@OneToMany(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "userId")
-//	private List<Banco> bancos;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "userId")
+    private List<Banco> bancos;
 }

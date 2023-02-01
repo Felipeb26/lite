@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 @JsonIgnoreProperties(value = {"dataCadastro"}, allowGetters = true)
 @EqualsAndHashCode(of = {"id"})
 public class AbstractEntity<T> implements Serializable {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", nullable = false, updatable = false)
@@ -25,9 +26,10 @@ public class AbstractEntity<T> implements Serializable {
 	protected String dataCadastro;
 
 	@PrePersist
-	public void persist() {
+	public void persistDate() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		LocalDateTime dateTime = LocalDateTime.now(ZoneId.of("America/Sao_Paulo"));
 		this.dataCadastro = dateTime.format(formatter);
 	}
+
 }

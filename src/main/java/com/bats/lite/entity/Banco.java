@@ -2,7 +2,7 @@ package com.bats.lite.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @ToString
 @Data

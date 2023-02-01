@@ -25,5 +25,5 @@ public class UserDTO {
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate nascimento;
 	private Roles roles;
-//	private List<Banco> bancos;
+	private List<Banco> bancos;
 }

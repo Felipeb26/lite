@@ -1,5 +1,6 @@
 logging:
   level:
+    com.bats.lite.feign: DEBUG
     com.bats.lite.service: TRACE
 
 server:
@@ -20,7 +21,11 @@ spring:
     url: jdbc:sqlite:src/main/resources/main.db
     driver-class-name: org.sqlite.JDBC
     hikari:
-       maximum-pool-size: 1
+      minimumIdle: 2
+      maximumPoolSize: 20
+      idleTimeout: 120000
+      connectionTimeout: 300000
+      leakDetectionThreshold: 300000
   jpa:
     database-platform: com.bats.lite.dialect.SQLiteDialect
     show-sql: true
@@ -44,3 +49,23 @@ spring:
     port: 5672
     username: guest
     password: guest
+
+
+request:
+  feign:
+    tipo: "json/"
+    url-cotacao: "https://economia.awesomeapi.com.br/"
+    ultimas: "/last/"
+    diario: "/daily/"
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 40000
+        readTimeout: 40000
+        loggerLevel: full
+
+
+api:
+  security-secret: ${JWT:GETSHUGA_TENSHOU}

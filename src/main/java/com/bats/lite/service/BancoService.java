@@ -60,16 +60,16 @@ public class BancoService {
 	}
 
 	public Banco saveBanco(BancoDTO banco) {
-//		var list = findBank(null, banco.getNome(), banco.getAgencia(), banco.getConta());
-//		if (list.isEmpty()) {
+		var list = findBank(null, banco.getNome(), banco.getAgencia(), banco.getConta());
+		if (list.isEmpty()) {
 			var bank = bancoMapper.dtoParaBanco(banco);
 			repository.save(bank);
 
 			var save = findBank(null, banco.getNome(), banco.getAgencia(), banco.getConta()).stream().findFirst();
 			return bancoMapper.dtoParaBanco(save.get());
-//		}
+		}
 
-//		throw new BatsException(FORBIDDEN, "Banco com mesma conta e agencia já cadastrados;");
+		throw new BatsException(FORBIDDEN, "Banco com mesma conta e agencia já cadastrados;");
 	}
 
 	public Banco updateBanco(Long id, Banco banco) {

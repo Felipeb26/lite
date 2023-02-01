@@ -4,19 +4,20 @@ import com.bats.lite.entity.QeueEntity;
 import com.bats.lite.exceptions.BatsException;
 import com.bats.lite.repository.QeueRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class QeueService {
 
 	private final QeueRepository repository;
 	private final EmailService service;
+
 	public String saveLog(String email) {
 		try {
-			var lista = repository.findAll();
-			long id = lista.stream().count() + 1;
 			var isValid = service.validEmail(email);
 			final String message;
 			if (isValid) {
@@ -30,10 +31,11 @@ public class QeueService {
 				message = String.format("%s email não é valido", email);
 			}
 
-			QeueEntity qeue = QeueEntity.builder().id(id).valid(isValid).message(message).build();
+			QeueEntity qeue = QeueEntity.builder().valid(isValid).message(message).build();
 			repository.save(qeue);
 			return message;
 		} catch (Exception e) {
+			log.error(String.format("\n\n\nUM ERRO ACONTECEU: %s\n\n\n",e.getMessage()));
 			throw new BatsException(HttpStatus.INTERNAL_SERVER_ERROR, "erro");
 		}
 	}

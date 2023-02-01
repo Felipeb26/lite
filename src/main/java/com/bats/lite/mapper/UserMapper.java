@@ -14,6 +14,7 @@ public class UserMapper {
 			.email(dto.getEmail())
 			.senha(dto.getSenha())
 			.roles(dto.getRoles())
+			.bancos(dto.getBancos())
 			.build();
 	}
 
@@ -24,6 +25,7 @@ public class UserMapper {
 			.email(entity.getEmail())
 			.senha(entity.getSenha())
 			.roles(entity.getRoles())
+			.bancos(entity.getBancos())
 			.build();
 	}
 
