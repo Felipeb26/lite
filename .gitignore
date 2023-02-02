@@ -34,3 +34,6 @@ build/
 
 *.db
 dockerfile
+
+dados
+.apt_generated*

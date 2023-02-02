@@ -2,6 +2,7 @@ package com.bats.lite.dto;
 
 
 import com.bats.lite.entity.Banco;
+import com.bats.lite.entity.Login;
 import com.bats.lite.enums.Roles;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -26,4 +27,5 @@ public class UserDTO {
 	private LocalDate nascimento;
 	private Roles roles;
 	private List<Banco> bancos;
+	private Login login;
 }

@@ -2,6 +2,7 @@ package com.bats.lite.entity;
 
 import com.bats.lite.enums.Roles;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -31,4 +32,8 @@ public class User extends AbstractEntity<User> {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "userId")
     private List<Banco> bancos;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "loginId")
+    private Login login;
 }

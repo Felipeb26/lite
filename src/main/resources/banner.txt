@@ -5,4 +5,4 @@
 |  |_)  |  /  _____  \      |  |     .----)   |         \    /\    /    |  `--'  | |  |\  \----.|  .  \  .----)   |   
 |______/  /__/     \__\     |__|     |_______/           \__/  \__/      \______/  | _| `._____||__|\__\ |_______/    
                                                                                                                       
-Projeto ${spring.application.name} Versão ${application.version}
+Projeto ${spring.application.name} Versão ${application.version} Port ${server.servlet.port}  Path ${server.servlet.context-path}

@@ -7,14 +7,15 @@ services:
       image: lite:SNAPSHOT
       ports:
          - "8081:8081"
+      expose:
+         - 8081:8081
       restart: on-failure
       depends_on:
          - rabbitmq
-      networks:
-         vpcbr:
-            ipv4_address: 0.0.0.0
       volumes:
          - ./dados:/var/lib/lites/
+      cpus: 0.5
+      mem_limit: 350m
    rabbitmq:
       image: rabbitmq:3-management
       container_name: rabbitmq
@@ -24,14 +25,5 @@ services:
          - "15672:15672"
       volumes:
          - ./dados:/var/lib/rabbitmq/
-      networks:
-         vpcbr:
-            ipv4_address: 0.0.0.0
-
-networks:
-   vpcbr:
-      driver: host
-      ipam:
-         config:
-            -  subnet: 0.0.0.0/16
-               gateway: 0.0.0.0
+      cpus: 0.5
+      mem_limit: 150m

@@ -1,10 +1,12 @@
 package com.bats.lite.service;
 
 import com.bats.lite.dto.UserDTO;
+import com.bats.lite.entity.Login;
 import com.bats.lite.entity.PageDTO;
 import com.bats.lite.entity.User;
 import com.bats.lite.exceptions.BatsException;
 import com.bats.lite.mapper.UserMapper;
+import com.bats.lite.repository.LoginRepository;
 import com.bats.lite.repository.UserRepository;
 import com.bats.lite.specification.UserSpecification;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -24,125 +26,132 @@ import static org.springframework.http.HttpStatus.*;
 @Service
 public class UserService {
 
-	@Autowired
-	private UserMapper mapper;
-	@Autowired
-	private UserRepository repository;
-	@Autowired
-	private RabbitTemplate template;
+    @Autowired
+    private UserMapper mapper;
+    @Autowired
+    private UserRepository repository;
+    @Autowired
+    private RabbitTemplate template;
+    @Autowired
+    private LoginRepository loginRepository;
 
-	public List<UserDTO> findByParam(Long id, String nome, String email, LocalDate dataInicial, LocalDate dataFinal) {
-		Specification<User> where = null;
+    public List<UserDTO> findByParam(Long id, String nome, String email, LocalDate dataInicial, LocalDate dataFinal) {
+        Specification<User> where = null;
 
-		where = SpecificationNull(where, id, nome, email, dataInicial, dataFinal);
-		final List<User> users;
-		if (nonNull(where)) {
-			users = repository.findAll(where);
-		} else {
-			users = repository.findAll();
-		}
-		if (users.isEmpty()) {
-			throw new BatsException(NO_CONTENT, "Sem usuarios encontrados.");
-		}
-		return toListDTO(users);
-	}
+        where = SpecificationNull(where, id, nome, email, dataInicial, dataFinal);
+        final List<User> users;
+        if (nonNull(where)) {
+            users = repository.findAll(where);
+        } else {
+            users = repository.findAll();
+        }
+        if (users.isEmpty()) {
+            throw new BatsException(NO_CONTENT, "Sem usuarios encontrados.");
+        }
+        return toListDTO(users);
+    }
 
-	public PageDTO findByParamPaged(Long id, String nome, String email, LocalDate dataInicial, LocalDate dataFinal, Pageable pageable) {
-		Specification<User> where = null;
+    public PageDTO findByParamPaged(Long id, String nome, String email, LocalDate dataInicial, LocalDate dataFinal, Pageable pageable) {
+        Specification<User> where = null;
 
-		where = SpecificationNull(where, id, nome, email, dataInicial, dataFinal);
-		final Page<User> page;
-		if (nonNull(where)) {
-			page = repository.findAll(where, pageable);
-		} else {
-			page = repository.findAll(pageable);
-		}
+        where = SpecificationNull(where, id, nome, email, dataInicial, dataFinal);
+        final Page<User> page;
+        if (nonNull(where)) {
+            page = repository.findAll(where, pageable);
+        } else {
+            page = repository.findAll(pageable);
+        }
 
-		if (page.isEmpty()) {
-			throw new BatsException(NO_CONTENT, "Sem usuarios cadastrados");
-		}
+        if (page.isEmpty()) {
+            throw new BatsException(NO_CONTENT, "Sem usuarios cadastrados");
+        }
 
-		return new PageDTO<>(page, this::toListDTO);
-	}
+        return new PageDTO<>(page, this::toListDTO);
+    }
 
-	public List<UserDTO> toListDTO(List<User> users) {
-		List<UserDTO> dtos = new ArrayList<>();
-		users.forEach(it -> dtos.add(mapper.toDTO(it)));
-		return dtos;
-	}
+    public List<UserDTO> toListDTO(List<User> users) {
+        List<UserDTO> dtos = new ArrayList<>();
+        users.forEach(it -> dtos.add(mapper.toDTO(it)));
+        return dtos;
+    }
 
-	public User save(UserDTO user) {
-		Specification<User> where = Specification.where(UserSpecification.emailEquals(user.getEmail()));
-		var list = repository.findAll(where);
+    public UserDTO save(UserDTO user) {
+        Specification<User> where = Specification.where(UserSpecification.emailEquals(user.getEmail()));
+        var list = repository.findAll(where);
 
-		if (list.isEmpty()) {
-			var usuario = mapper.toEntity(user);
-			template.convertAndSend("usuario.cadastrado", usuario);
-			return repository.save(usuario);
-		}
-		throw new BatsException(BAD_REQUEST, "Email já cadastrado");
-	}
+        if (list.isEmpty()) {
+            var login = Login.builder()
+                    .email(user.getEmail())
+                    .senha(user.getSenha()).build();
 
-	public UserDTO update(Long id, UserDTO user) {
-		Specification<User> where = Specification.where(UserSpecification.iDEguals(id));
-		var list = repository.findAll(where);
-		if (list.isEmpty()) {
-			throw new BatsException(NOT_FOUND, "não encontrado");
-		}
-		var userDTO = repository.save(mapper.toEntity(user));
-		return mapper.toDTO(userDTO);
-	}
+            var usuario = mapper.toEntity(user, login);
+            template.convertAndSend("usuario.cadastrado", usuario);
+            loginRepository.save(login);
+            return mapper.toDTO(repository.save(usuario));
+        }
+        throw new BatsException(BAD_REQUEST, "Email já cadastrado");
+    }
 
-	public String delete(Long id) {
-		Specification<User> where = null;
-		if (nonNull(id)) {
-			where = Specification.where(UserSpecification.iDEguals(id));
-			var user = repository.findAll(where);
-			if (!user.isEmpty()) {
-				repository.delete(user.get(0));
-				return "Usuario deletado com sucesso!";
-			} else {
-				throw new BatsException(NOT_FOUND, "não encontrado usuario");
-			}
-		} else {
-			throw new BatsException(NOT_FOUND, "id não encontrado");
-		}
-	}
+    public UserDTO update(Long id, UserDTO user) {
+        Specification<User> where = Specification.where(UserSpecification.iDEguals(id));
+        var list = repository.findAll(where);
+        if (list.isEmpty()) {
+            throw new BatsException(NOT_FOUND, "não encontrado");
+        }
+        var userDTO = repository.save(mapper.toEntity(user));
+        return mapper.toDTO(userDTO);
+    }
 
-	public Specification<User> SpecificationNull(Specification<User> where, Long id, String nome, String email, LocalDate dataInicial, LocalDate dataFinal) {
+    public String delete(Long id) {
+        Specification<User> where = null;
+        if (nonNull(id)) {
+            where = Specification.where(UserSpecification.iDEguals(id));
+            var user = repository.findAll(where);
+            if (!user.isEmpty()) {
+                repository.delete(user.get(0));
+                return "Usuario deletado com sucesso!";
+            } else {
+                throw new BatsException(NOT_FOUND, "não encontrado usuario");
+            }
+        } else {
+            throw new BatsException(NOT_FOUND, "id não encontrado");
+        }
+    }
 
-		if (nonNull(id) && nonNull(where)) {
-			where = where.and(UserSpecification.iDEguals(id));
-		} else if (nonNull(id)) {
-			where = UserSpecification.iDEguals(id);
-		}
+    public Specification<User> SpecificationNull(Specification<User> where, Long id, String nome, String email, LocalDate dataInicial, LocalDate dataFinal) {
 
-		if (nonNull(nome) && !nome.isBlank() && nonNull(where)) {
-			where = where.and(UserSpecification.nomeEquals(nome));
-		} else if (nonNull(nome) && !nome.isBlank()) {
-			where = UserSpecification.nomeEquals(nome);
-		}
+        if (nonNull(id) && nonNull(where)) {
+            where = where.and(UserSpecification.iDEguals(id));
+        } else if (nonNull(id)) {
+            where = UserSpecification.iDEguals(id);
+        }
 
-		if (nonNull(email) && !email.isBlank() && nonNull(where)) {
-			where = where.and(UserSpecification.emailEquals(email));
-		} else if (nonNull(email) && !email.isBlank()) {
-			where = UserSpecification.emailEquals(email);
-		}
+        if (nonNull(nome) && !nome.isBlank() && nonNull(where)) {
+            where = where.and(UserSpecification.nomeEquals(nome));
+        } else if (nonNull(nome) && !nome.isBlank()) {
+            where = UserSpecification.nomeEquals(nome);
+        }
 
-		if (nonNull(dataInicial) && nonNull(where)) {
-			if (nonNull(dataFinal)) {
-				where = where.and(UserSpecification.nascimentoBetween(dataInicial, dataFinal));
-			} else {
-				where = where.and(UserSpecification.nascimentoEquals(dataInicial));
-			}
-		} else {
-			if (nonNull(dataFinal)) {
-				where = UserSpecification.nascimentoBetween(dataInicial, dataFinal);
-			} else {
-				where = UserSpecification.nascimentoEquals(dataInicial);
-			}
-		}
-		return where;
-	}
+        if (nonNull(email) && !email.isBlank() && nonNull(where)) {
+            where = where.and(UserSpecification.emailEquals(email));
+        } else if (nonNull(email) && !email.isBlank()) {
+            where = UserSpecification.emailEquals(email);
+        }
+
+        if (nonNull(dataInicial) && nonNull(where)) {
+            if (nonNull(dataFinal)) {
+                where = where.and(UserSpecification.nascimentoBetween(dataInicial, dataFinal));
+            } else {
+                where = where.and(UserSpecification.nascimentoEquals(dataInicial));
+            }
+        } else if (nonNull(dataInicial)) {
+            if (nonNull(dataFinal)) {
+                where = UserSpecification.nascimentoBetween(dataInicial, dataFinal);
+            } else {
+                where = UserSpecification.nascimentoEquals(dataInicial);
+            }
+        }
+        return where;
+    }
 
 }

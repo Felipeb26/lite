@@ -31,10 +31,6 @@ public class Login implements UserDetails, Serializable {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "loginID")
-    private User user;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(Roles.values().toString()));
@@ -68,5 +64,11 @@ public class Login implements UserDetails, Serializable {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+
+    @PrePersist
+    public void setId() {
+        this.uuid = UUID.randomUUID();
     }
 }
