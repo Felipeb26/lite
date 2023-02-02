@@ -17,6 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
@@ -59,7 +61,11 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
+        try {
+            return configuration.getAuthenticationManager();
+        } catch (Exception e) {
+            throw new BatsException(UNAUTHORIZED, e.getMessage(), e.getCause());
+        }
     }
 
     @Bean

@@ -3,6 +3,7 @@ package com.bats.lite.amqp;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.QueueBuilder;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -26,9 +27,7 @@ public class AMQPConfiguration {
   }
 
   @Bean
-  public ApplicationListener<ApplicationReadyEvent> applicationListener(
-    RabbitAdmin admin
-  ) {
+  public ApplicationListener<ApplicationReadyEvent> applicationListener(RabbitAdmin admin) {
     return event -> admin.initialize();
   }
 
@@ -39,10 +38,7 @@ public class AMQPConfiguration {
   }
 
   @Bean
-  public RabbitTemplate rabbitTemplate(
-    ConnectionFactory factory,
-    Jackson2JsonMessageConverter messageConverter
-  ) {
+  public RabbitTemplate rabbitTemplate(ConnectionFactory factory, Jackson2JsonMessageConverter messageConverter) {
     RabbitTemplate template = new RabbitTemplate(factory);
     template.setMessageConverter(messageConverter);
     return template;

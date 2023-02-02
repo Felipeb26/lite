@@ -2,6 +2,7 @@ package com.bats.lite.configuration.security.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.bats.lite.entity.Login;
 import com.bats.lite.exceptions.BatsException;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,7 +30,6 @@ public class TokenService {
                     .sign(algorith);
 
         } catch (Exception e) {
-            e.printStackTrace();
             throw new BatsException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
@@ -41,8 +41,8 @@ public class TokenService {
                     .withIssuer("API_FOR_DASBHOARD")
                     .build()
                     .verify(token).getSubject();
-        } catch (Exception e) {
-            throw new BatsException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        } catch (TokenExpiredException e) {
+            throw new BatsException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
 

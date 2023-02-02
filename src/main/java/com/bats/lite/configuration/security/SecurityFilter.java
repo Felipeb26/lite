@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static java.util.Objects.nonNull;
+import static org.springframework.http.HttpStatus.*;
 
 @Component
 @RequiredArgsConstructor
@@ -27,16 +28,22 @@ public class SecurityFilter extends OncePerRequestFilter {
 
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        var auth = recoverToken(request);
-        if (auth != null && !auth.isEmpty()) {
-            var subject = tokenService.getSubjec(auth);
-            var login = loginRepository.findByUsername(subject);
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)  {
+        try {
+            var auth = recoverToken(request);
+            if (auth != null && !auth.isEmpty()) {
+                var subject = tokenService.getSubjec(auth);
+                var login = loginRepository.findByUsername(subject).orElseThrow(() -> new BatsException(NOT_FOUND, "User dont was found"));
 
-            var authentication = new UsernamePasswordAuthenticationToken(login, null, login.get().getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+                var authentication = new UsernamePasswordAuthenticationToken(login, null, login.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+            filterChain.doFilter(request, response);
+        } catch (BatsException e) {
+            throw new BatsException(e.getStatus(), e.getReason());
+        } catch (ServletException | IOException e) {
+            throw new BatsException(INTERNAL_SERVER_ERROR, e.getMessage(), e.getCause());
         }
-        filterChain.doFilter(request, response);
     }
 
     private String recoverToken(HttpServletRequest request) {

@@ -15,11 +15,10 @@ public class InitialConfig {
     @Autowired
     private LoginRepository loginRepository;
 
-    @Async
     @Transactional
     public void create_user() {
         var logins = loginRepository.findAll();
-        if(!nonNull(logins) ||logins.isEmpty())
+        if (!nonNull(logins) || logins.isEmpty())
             saveDefaultUser();
     }
 

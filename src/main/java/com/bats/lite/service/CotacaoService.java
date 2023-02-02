@@ -23,30 +23,15 @@ public class CotacaoService {
     @Autowired
     private CotacaoFeign cotacaoFeign;
 
-    public Object currencies() {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        List<Currency> currencies = new ArrayList<>();
-        LinkedHashMap currency = (LinkedHashMap) cotacaoFeign.cotacaoList();
-
-        try {
-            ObjectOutputStream out = null;
-            out = new ObjectOutputStream(baos);
-
-            Object[] keys = currency.keySet().toArray();
-            Object[] values = currency.values().toArray();
-
-            for (int i = 0; i < currency.keySet().size(); i++) {
-                var currencyMap = Currency.builder().currency(keys[i].toString()).cotacao(objectToCotacao(values[i])).build();
-                currencies.add(currencyMap);
-            }
-
-            out.writeObject(currencies);
-            out.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public Object currency() {
+        Currency currency = new Currency();
+        LinkedHashMap currencyListMap = (LinkedHashMap) cotacaoFeign.cotacaoList();
+        Object[] keys = currencyListMap.keySet().toArray();
+        Object[] values = currencyListMap.values().toArray();
+        for (int i = 0; i < currencyListMap.keySet().size(); i++) {
+            currency = Currency.builder().currency(keys[i].toString()).cotacao(objectToCotacao(values[i])).build();
         }
-
-        return baos.toByteArray();
+        return currency;
     }
 
     public List<Cotacao> perDate(int days) {
@@ -63,7 +48,7 @@ public class CotacaoService {
 
 
     private Cotacao objectToCotacao(Object value) {
-        return mapper.convertValue(value, new TypeReference<Cotacao>() {
+        return mapper.convertValue(value, new TypeReference<>() {
         });
     }
 }

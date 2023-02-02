@@ -1,5 +1,6 @@
 package com.bats.lite.configuration;
 
+import com.bats.lite.exceptions.BatsException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -15,6 +16,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @Configuration
 @EnableSwagger2
@@ -46,14 +49,14 @@ public class SwaggerConfig implements WebMvcConfigurer {
     }
 
     private SecurityContext securityContext() {
-        return SecurityContext.builder().securityReferences(defaultAuth()).build();
+            return SecurityContext.builder().securityReferences(defaultAuth()).build();
     }
 
     private List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-        authorizationScopes[0] = authorizationScope;
-        return Arrays.asList(new SecurityReference("Bearer", authorizationScopes));
+            AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+            AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+            authorizationScopes[0] = authorizationScope;
+            return Arrays.asList(new SecurityReference("Bearer", authorizationScopes));
     }
 
     @Override
