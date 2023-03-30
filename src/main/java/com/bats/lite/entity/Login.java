@@ -1,13 +1,11 @@
 package com.bats.lite.entity;
 
 import com.bats.lite.enums.Roles;
-import javassist.Loader;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.management.relation.Role;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
@@ -24,8 +22,7 @@ import java.util.UUID;
 public class Login implements UserDetails, Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID uuid;
+    private String id;
     @Column(nullable = false, unique = true)
     private String senha;
     @Column(nullable = false, unique = true)
@@ -69,6 +66,7 @@ public class Login implements UserDetails, Serializable {
 
     @PrePersist
     public void setId() {
-        this.uuid = UUID.randomUUID();
+        var uuid = UUID.randomUUID();
+        this.id = new String(uuid.toString());
     }
 }

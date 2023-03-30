@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -21,18 +23,30 @@ public class CotacaoService {
     @Autowired
     private CotacaoFeign cotacaoFeign;
 
-    public List<Currency> currencies() {
+    public Object currencies() {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
         List<Currency> currencies = new ArrayList<>();
         LinkedHashMap currency = (LinkedHashMap) cotacaoFeign.cotacaoList();
 
-        Object[] keys = currency.keySet().toArray();
-        Object[] values = currency.values().toArray();
+        try {
+            ObjectOutputStream out = null;
+            out = new ObjectOutputStream(baos);
 
-        for (int i = 0; i < currency.keySet().size(); i++) {
-            var currencyMap = Currency.builder().currency(keys[i].toString()).cotacao(objectToCotacao(values[i])).build();
-            currencies.add(currencyMap);
+            Object[] keys = currency.keySet().toArray();
+            Object[] values = currency.values().toArray();
+
+            for (int i = 0; i < currency.keySet().size(); i++) {
+                var currencyMap = Currency.builder().currency(keys[i].toString()).cotacao(objectToCotacao(values[i])).build();
+                currencies.add(currencyMap);
+            }
+
+            out.writeObject(currencies);
+            out.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return currencies;
+
+        return baos.toByteArray();
     }
 
     public List<Cotacao> perDate(int days) {

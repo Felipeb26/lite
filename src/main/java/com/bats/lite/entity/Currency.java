@@ -5,12 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Currency {
+public class Currency implements Serializable {
 
-	private String currency;
-	private Cotacao cotacao;
+    private String currency;
+    private Cotacao cotacao;
 }

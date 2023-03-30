@@ -2,7 +2,6 @@ package com.bats.lite.controller;
 
 import com.bats.lite.dto.UserDTO;
 import com.bats.lite.entity.PageDTO;
-import com.bats.lite.entity.User;
 import com.bats.lite.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
