@@ -10,7 +10,6 @@ import java.util.List;
 
 @FeignClient(value = "CotacaoClient", url = "${request.feign.url-cotacao}")
 public interface CotacaoFeign {
-
     @GetMapping(value = "${request.feign.tipo}${request.feign.ultimas}/USD-BRL,EUR-BRL,BTC-BRL")
     Object cotacaoList();
 

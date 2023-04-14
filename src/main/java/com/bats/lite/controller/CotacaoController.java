@@ -10,16 +10,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
 
 @RestController
 @CrossOrigin("*")
@@ -32,19 +27,13 @@ public class CotacaoController {
     @Autowired
     private FilesConfig filesConfig;
 
-    @FileGenerate(aClass = Cotacao.class, FILE_TYPE = FileType.CSV)
+    @FileGenerate(ClassName = Cotacao.class, FILE_TYPE = FileType.PDF)
     @GetMapping("/arquivo")
     @ApiOperation("Regasta as cotação de acordo com as moedas informadas")
     public Object cotacaoList() {
-        UUID uuid = UUID.randomUUID();
         var file = cotacaoService.currency();
-        int bytes = filesConfig.getBytesLength(file);
-
         return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(filesConfig.discoverFileType(file)))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + uuid + ".pdf")
-                .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(bytes))
-                .header(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*")
+                .header("file-type", "excel")
                 .body(file);
     }
 

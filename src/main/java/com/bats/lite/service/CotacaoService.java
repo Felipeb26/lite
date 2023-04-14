@@ -24,14 +24,18 @@ public class CotacaoService {
     private CotacaoFeign cotacaoFeign;
 
     public Object currency() {
-        Currency currency = new Currency();
+        List<Currency> currencies = new ArrayList<>();
+
         LinkedHashMap currencyListMap = (LinkedHashMap) cotacaoFeign.cotacaoList();
         Object[] keys = currencyListMap.keySet().toArray();
         Object[] values = currencyListMap.values().toArray();
         for (int i = 0; i < currencyListMap.keySet().size(); i++) {
-            currency = Currency.builder().currency(keys[i].toString()).cotacao(objectToCotacao(values[i])).build();
+           Currency currency = Currency.builder()
+                   .currency(keys[i].toString())
+                   .cotacao(objectToCotacao(values[i])).build();
+            currencies.add(currency);
         }
-        return currency;
+        return currencies;
     }
 
     public List<Cotacao> perDate(int days) {

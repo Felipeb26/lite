@@ -38,12 +38,4 @@ public class FilesConfig {
         }
     }
 
-    public int getBytesLength(Object file) {
-        int bytes;
-        if (file instanceof byte[])
-            bytes = ((byte[]) file).length;
-        else
-            bytes = Objects.toString(file).getBytes().length;
-        return bytes;
-    }
 }

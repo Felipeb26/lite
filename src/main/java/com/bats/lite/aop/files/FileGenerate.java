@@ -11,7 +11,7 @@ import static com.bats.lite.aop.files.FileType.PDF;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface FileGenerate {
 
-    Class<?> aClass();
     FileType FILE_TYPE() default PDF;
 
+    Class<?> ClassName();
 }

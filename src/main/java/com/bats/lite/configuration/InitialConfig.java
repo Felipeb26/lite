@@ -29,7 +29,6 @@ public class InitialConfig {
                 .senha("2626")
                 .build();
         var l = loginRepository.save(login);
-        System.out.println(l);
     }
 
 }
