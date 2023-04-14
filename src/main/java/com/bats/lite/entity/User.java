@@ -31,9 +31,11 @@ public class User extends AbstractEntity<User> {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "userId")
+    @JsonManagedReference
     private List<Banco> bancos;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "loginId")
+    @JsonManagedReference
     private Login login;
 }

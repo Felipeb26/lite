@@ -54,81 +54,86 @@ public class FilesToGenerateImplements implements FilesToGenerate {
 
     @Override
     public Object createPDF(Class<?> aClass, Object object) {
-        try {
-            List<Exception> exceptions = new ArrayList<>();
-            BAOS = new ByteArrayOutputStream();
-            PDF_DATA = new LinkedList<>();
 
-            FastReportBuilder drb = new FastReportBuilder();
-            DynamicReport dynam = pdfUtils.dynamicBuilder(drb);
-
-            object = getObject(object);
-            if (isNull(object)) {
-                return object;
-            }
-
-            if (object instanceof ArrayList) {
-                object = getObjectFromArrayList((ArrayList<Object>) object);
-                List<String> keyHeader = new ArrayList<>();
-                var maps = createMapObject(((List<?>) object).get(0));
-                List<Object> keySet = new ArrayList<>(maps.keySet());
-
-                for (Object key : keySet) {
-                    keyHeader.add(Objects.toString(key));
-                }
-                for (var i = 0; i < keyHeader.size(); i++) {
-                    try {
-                        List<Object> values = new ArrayList<>(maps.values());
-                        drb.addColumn(keyHeader.get(i), keyHeader.get(i), String.class.getName(), pdfUtils.setSize(values.get(i)));
-                    } catch (ClassNotFoundException e) {
-                        exceptions.add(e);
-                    }
-                }
-
-                for (var obj : (ArrayList<Object>) object) {
-                    var map = createMapObject(obj);
-                    PDF_DATA.add(map);
-                }
-
-                PDF_DATA = PDF_DATA.stream().distinct().collect(Collectors.toList());
-                JRDataSource ds = new JRBeanCollectionDataSource(PDF_DATA, true);
-                JasperPrint jp = DynamicJasperHelper.generateJasperPrint(dynam, new ClassicLayoutManager(), ds);
-                JasperExportManager.exportReportToPdfStream(jp, BAOS);
-
-                if (!exceptions.isEmpty()) return object;
-                return returnFile(BAOS.toByteArray(), PDF_TYPE);
-            }
-
-
-            List<String> keyHeader = new ArrayList<>();
-            var maps = createMapObject(object);
-            List<Object> keySet = new ArrayList<>(maps.keySet());
-
-            for (Object key : keySet) {
-                keyHeader.add(Objects.toString(key));
-            }
-
-            for (var i = 0; i < keyHeader.size(); i++) {
-                try {
-                    List<Object> values = new ArrayList<>(maps.values());
-                    drb.addColumn(keyHeader.get(i), keyHeader.get(i), String.class.getName(), pdfUtils.setSize(values.get(i)));
-                } catch (ClassNotFoundException e) {
-                    exceptions.add(e);
-                }
-            }
-            PDF_DATA.add(maps);
-
-            JRDataSource ds = new JRBeanCollectionDataSource(PDF_DATA, true);
-            JasperPrint jp = DynamicJasperHelper.generateJasperPrint(dynam, new ClassicLayoutManager(), ds);
-            JasperExportManager.exportReportToPdfStream(jp, BAOS);
-
-            if (!exceptions.isEmpty()) return object;
-            return returnFile(BAOS.toByteArray(), PDF_TYPE);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
-        return object;
+        return null;
     }
+//    @Override
+//    public Object createPDF(Class<?> aClass, Object object) {
+//        try {
+//            List<Exception> exceptions = new ArrayList<>();
+//            BAOS = new ByteArrayOutputStream();
+//            PDF_DATA = new LinkedList<>();
+//
+//            FastReportBuilder drb = new FastReportBuilder();
+//            DynamicReport dynam = pdfUtils.dynamicBuilder(drb);
+//
+//            object = getObject(object);
+//            if (isNull(object)) {
+//                return object;
+//            }
+//
+//            if (object instanceof ArrayList) {
+//                object = getObjectFromArrayList((ArrayList<Object>) object);
+//                List<String> keyHeader = new ArrayList<>();
+//                var maps = createMapObject(((List<?>) object).get(0));
+//                List<Object> keySet = new ArrayList<>(maps.keySet());
+//
+//                for (Object key : keySet) {
+//                    keyHeader.add(Objects.toString(key));
+//                }
+//                for (var i = 0; i < keyHeader.size(); i++) {
+//                    try {
+//                        List<Object> values = new ArrayList<>(maps.values());
+//                        drb.addColumn(keyHeader.get(i), keyHeader.get(i), String.class.getName(), pdfUtils.setSize(values.get(i)));
+//                    } catch (ClassNotFoundException e) {
+//                        exceptions.add(e);
+//                    }
+//                }
+//
+//                for (var obj : (ArrayList<Object>) object) {
+//                    var map = createMapObject(obj);
+//                    PDF_DATA.add(map);
+//                }
+//
+//                PDF_DATA = PDF_DATA.stream().distinct().collect(Collectors.toList());
+//                JRDataSource ds = new JRBeanCollectionDataSource(PDF_DATA, true);
+//                JasperPrint jp = DynamicJasperHelper.generateJasperPrint(dynam, new ClassicLayoutManager(), ds);
+//                JasperExportManager.exportReportToPdfStream(jp, BAOS);
+//
+//                if (!exceptions.isEmpty()) return object;
+//                return returnFile(BAOS.toByteArray(), PDF_TYPE);
+//            }
+//
+//
+//            List<String> keyHeader = new ArrayList<>();
+//            var maps = createMapObject(object);
+//            List<Object> keySet = new ArrayList<>(maps.keySet());
+//
+//            for (Object key : keySet) {
+//                keyHeader.add(Objects.toString(key));
+//            }
+//
+//            for (var i = 0; i < keyHeader.size(); i++) {
+//                try {
+//                    List<Object> values = new ArrayList<>(maps.values());
+//                    drb.addColumn(keyHeader.get(i), keyHeader.get(i), String.class.getName(), pdfUtils.setSize(values.get(i)));
+//                } catch (ClassNotFoundException e) {
+//                    exceptions.add(e);
+//                }
+//            }
+//            PDF_DATA.add(maps);
+//
+//            JRDataSource ds = new JRBeanCollectionDataSource(PDF_DATA, true);
+//            JasperPrint jp = DynamicJasperHelper.generateJasperPrint(dynam, new ClassicLayoutManager(), ds);
+//            JasperExportManager.exportReportToPdfStream(jp, BAOS);
+//
+//            if (!exceptions.isEmpty()) return object;
+//            return returnFile(BAOS.toByteArray(), PDF_TYPE);
+//        } catch (Exception e) {
+//            log.error(e.getMessage());
+//        }
+//        return object;
+//    }
 
     @Override
     public Object createCSV(Class<?> aClass, Object object) {
