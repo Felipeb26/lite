@@ -1,19 +1,20 @@
 package com.bats.lite.aop.service.Implements;
 
-import ar.com.fdvs.dj.core.DynamicJasperHelper;
-import ar.com.fdvs.dj.core.layout.ClassicLayoutManager;
-import ar.com.fdvs.dj.domain.DynamicReport;
-import ar.com.fdvs.dj.domain.builders.FastReportBuilder;
 import com.bats.lite.aop.config.CLassUtils;
 import com.bats.lite.aop.config.ExcelUtils;
 import com.bats.lite.aop.config.PDFUtils;
 import com.bats.lite.aop.service.FilesToGenerate;
 import com.google.gson.Gson;
+import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.color.DeviceRgb;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.border.Border;
+import com.itextpdf.layout.border.GrooveBorder;
+import com.itextpdf.layout.element.Table;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.CDL;
@@ -31,7 +32,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
 import java.lang.reflect.Field;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -43,8 +43,6 @@ public class FilesToGenerateImplements implements FilesToGenerate {
     private static final String PDF_TYPE = "PDF";
     private static final String CSV_TYPE = "CSV";
     private static final String XLSX_TYPE = "XLSX";
-    private static List<Map<Object, Object>> PDF_DATA;
-    private static ByteArrayOutputStream BAOS;
     @Autowired
     private PDFUtils pdfUtils;
     @Autowired
@@ -53,87 +51,97 @@ public class FilesToGenerateImplements implements FilesToGenerate {
     private Gson gson;
 
     @Override
-    public Object createPDF(Class<?> aClass, Object object) {
+    public Object createPDF(Class<?> aClass, Object object, String watermark) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try {
+            object = getObject(object);
+            Field[] fields = aClass.getDeclaredFields();
+            String[] headerColumn = new String[fields.length];
+            float[] headerColumnLength = new float[fields.length];
 
-        return null;
+            for (int i = 0; i < fields.length; i++) {
+                headerColumn[i] = fields[i].getName();
+                headerColumnLength[i] = ((float) fields[i].getName().length() / fields.length) * 100;
+            }
+
+            PdfWriter writer = new PdfWriter(baos);
+            PdfDocument pdfDocument = new PdfDocument(writer);
+            pdfDocument.addNewPage();
+            Document document = new Document(pdfDocument, PageSize.A4);
+            pdfUtils.setWatermark(pdfDocument, document, watermark);
+
+            Table table = new Table(headerColumnLength);
+            table.setWidthPercent(100);
+
+            Border border = new GrooveBorder(new DeviceRgb(0, 0, 0), 2);
+            for (String header : headerColumn) {
+                com.itextpdf.layout.element.Cell cell = new com.itextpdf.layout.element.Cell();
+                table.addCell(cell.add(pdfUtils.camelString(header))
+                        .setFontColor(Color.BLACK)
+                        .setBackgroundColor(Color.CYAN).setBorder(border));
+                pdfUtils.setCellStyle(cell);
+            }
+
+            int rowNumber = 1;
+            if (object instanceof ArrayList) {
+                object = getObjectFromArrayList((ArrayList<Object>) object);
+                for (var obj : (ArrayList<Object>) object) {
+                    JSONArray jsonArray = objectToJSONArray(obj);
+                    for (var array : jsonArray) {
+                        if (array instanceof JSONObject) {
+                            rowNumber++;
+                            Iterator<String> iterator = ((JSONObject) array).keys();
+                            while (iterator.hasNext()) {
+                                String key = iterator.next();
+                                for (var i = 0; i < headerColumn.length; i++) {
+                                    if (headerColumn[i].equalsIgnoreCase(key)) {
+                                        com.itextpdf.layout.element.Cell cell = new com.itextpdf.layout.element.Cell();
+                                        pdfUtils.setCellStyle(cell);
+                                        String value = (String) ((JSONObject) array).get(key);
+                                        if ((rowNumber % 2) != 0)
+                                            cell.setBackgroundColor(new DeviceRgb(140, 255, 255));
+                                        table.addCell(cell.add(value));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                document.add(table);
+                document.close();
+                return returnFile(baos.toByteArray(), PDF_TYPE);
+            }
+
+            JSONArray jsonArray = objectToJSONArray(object);
+            for (var array : jsonArray) {
+                if (array instanceof JSONObject) {
+                    rowNumber++;
+                    Iterator<String> iterator = ((JSONObject) array).keys();
+                    while (iterator.hasNext()) {
+                        String key = iterator.next();
+                        for (var i = 0; i < headerColumn.length; i++) {
+                            if (headerColumn[i].equalsIgnoreCase(key)) {
+                                com.itextpdf.layout.element.Cell cell = new com.itextpdf.layout.element.Cell();
+                                pdfUtils.setCellStyle(cell);
+                                String value = (String) ((JSONObject) array).get(key);
+                                if ((rowNumber % 2) != 0)
+                                    cell.setBackgroundColor(new DeviceRgb(140, 255, 255));
+                                table.addCell(cell.add(value));
+                            }
+                        }
+                    }
+                }
+            }
+
+            document.add(table);
+            document.close();
+
+            return returnFile(baos.toByteArray(), PDF_TYPE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return object;
     }
-//    @Override
-//    public Object createPDF(Class<?> aClass, Object object) {
-//        try {
-//            List<Exception> exceptions = new ArrayList<>();
-//            BAOS = new ByteArrayOutputStream();
-//            PDF_DATA = new LinkedList<>();
-//
-//            FastReportBuilder drb = new FastReportBuilder();
-//            DynamicReport dynam = pdfUtils.dynamicBuilder(drb);
-//
-//            object = getObject(object);
-//            if (isNull(object)) {
-//                return object;
-//            }
-//
-//            if (object instanceof ArrayList) {
-//                object = getObjectFromArrayList((ArrayList<Object>) object);
-//                List<String> keyHeader = new ArrayList<>();
-//                var maps = createMapObject(((List<?>) object).get(0));
-//                List<Object> keySet = new ArrayList<>(maps.keySet());
-//
-//                for (Object key : keySet) {
-//                    keyHeader.add(Objects.toString(key));
-//                }
-//                for (var i = 0; i < keyHeader.size(); i++) {
-//                    try {
-//                        List<Object> values = new ArrayList<>(maps.values());
-//                        drb.addColumn(keyHeader.get(i), keyHeader.get(i), String.class.getName(), pdfUtils.setSize(values.get(i)));
-//                    } catch (ClassNotFoundException e) {
-//                        exceptions.add(e);
-//                    }
-//                }
-//
-//                for (var obj : (ArrayList<Object>) object) {
-//                    var map = createMapObject(obj);
-//                    PDF_DATA.add(map);
-//                }
-//
-//                PDF_DATA = PDF_DATA.stream().distinct().collect(Collectors.toList());
-//                JRDataSource ds = new JRBeanCollectionDataSource(PDF_DATA, true);
-//                JasperPrint jp = DynamicJasperHelper.generateJasperPrint(dynam, new ClassicLayoutManager(), ds);
-//                JasperExportManager.exportReportToPdfStream(jp, BAOS);
-//
-//                if (!exceptions.isEmpty()) return object;
-//                return returnFile(BAOS.toByteArray(), PDF_TYPE);
-//            }
-//
-//
-//            List<String> keyHeader = new ArrayList<>();
-//            var maps = createMapObject(object);
-//            List<Object> keySet = new ArrayList<>(maps.keySet());
-//
-//            for (Object key : keySet) {
-//                keyHeader.add(Objects.toString(key));
-//            }
-//
-//            for (var i = 0; i < keyHeader.size(); i++) {
-//                try {
-//                    List<Object> values = new ArrayList<>(maps.values());
-//                    drb.addColumn(keyHeader.get(i), keyHeader.get(i), String.class.getName(), pdfUtils.setSize(values.get(i)));
-//                } catch (ClassNotFoundException e) {
-//                    exceptions.add(e);
-//                }
-//            }
-//            PDF_DATA.add(maps);
-//
-//            JRDataSource ds = new JRBeanCollectionDataSource(PDF_DATA, true);
-//            JasperPrint jp = DynamicJasperHelper.generateJasperPrint(dynam, new ClassicLayoutManager(), ds);
-//            JasperExportManager.exportReportToPdfStream(jp, BAOS);
-//
-//            if (!exceptions.isEmpty()) return object;
-//            return returnFile(BAOS.toByteArray(), PDF_TYPE);
-//        } catch (Exception e) {
-//            log.error(e.getMessage());
-//        }
-//        return object;
-//    }
 
     @Override
     public Object createCSV(Class<?> aClass, Object object) {
@@ -322,7 +330,6 @@ public class FilesToGenerateImplements implements FilesToGenerate {
                 return MediaType.APPLICATION_OCTET_STREAM;
             }
         }
-
         return MediaType.APPLICATION_JSON;
     }
 

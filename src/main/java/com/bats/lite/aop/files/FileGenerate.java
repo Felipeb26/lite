@@ -14,4 +14,6 @@ public @interface FileGenerate {
     FileType FILE_TYPE() default PDF;
 
     Class<?> ClassName();
+
+    String watermark() default "";
 }

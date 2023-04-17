@@ -35,7 +35,7 @@ public class QeueService {
 			repository.save(qeue);
 			return message;
 		} catch (Exception e) {
-			log.error(String.format("\n\n\nUM ERRO ACONTECEU: %s\n\n\n",e.getMessage()));
+			log.error("\nUM ERRO ACONTECEU: {}\n",e.getMessage());
 			throw new BatsException(HttpStatus.INTERNAL_SERVER_ERROR, "erro");
 		}
 	}

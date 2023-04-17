@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -27,14 +28,12 @@ public class CotacaoController {
     @Autowired
     private FilesConfig filesConfig;
 
-    @FileGenerate(ClassName = Cotacao.class, FILE_TYPE = FileType.PDF)
+    @FileGenerate(ClassName = Cotacao.class, FILE_TYPE = FileType.PDF, watermark = "/files/shadow.png")
     @GetMapping("/arquivo")
     @ApiOperation("Regasta as cotação de acordo com as moedas informadas")
     public Object cotacaoList() {
         var file = cotacaoService.currency();
-        return ResponseEntity.ok()
-                .header("file-type", "excel")
-                .body(file);
+        return ResponseEntity.ok().body(file);
     }
 
     @GetMapping("date")

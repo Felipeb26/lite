@@ -2,8 +2,11 @@ package com.bats.lite.entity;
 
 import com.bats.lite.enums.Roles;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -12,7 +15,6 @@ import java.util.List;
 
 
 @Data
-@ToString
 @Entity
 @Builder
 @AllArgsConstructor
@@ -31,11 +33,11 @@ public class User extends AbstractEntity<User> {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "userId")
-    @JsonManagedReference
+    @JsonIgnore
     private List<Banco> bancos;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "loginId")
-    @JsonManagedReference
+    @JsonIgnore
     private Login login;
 }

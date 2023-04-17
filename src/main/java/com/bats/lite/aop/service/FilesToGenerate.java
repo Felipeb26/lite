@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface FilesToGenerate {
 
-    Object createPDF(Class<?> aClass, Object object);
+    Object createPDF(Class<?> aClass, Object object, String watermark);
 
     Object createCSV(Class<?> aClass, Object object);
 

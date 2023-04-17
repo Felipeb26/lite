@@ -2,12 +2,16 @@ package com.bats.lite.entity;
 
 import com.bats.lite.enums.Roles;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -27,6 +31,9 @@ public class Login implements UserDetails, Serializable {
     private String senha;
     @Column(nullable = false, unique = true)
     private String email;
+    @Column(nullable = false, updatable = false)
+    @CreatedDate
+    protected String dataCadastro;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -68,5 +75,8 @@ public class Login implements UserDetails, Serializable {
     public void setId() {
         var uuid = UUID.randomUUID();
         this.id = new String(uuid.toString());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime dateTime = LocalDateTime.now(ZoneId.of("America/Sao_Paulo"));
+        this.dataCadastro = dateTime.format(formatter);
     }
 }
