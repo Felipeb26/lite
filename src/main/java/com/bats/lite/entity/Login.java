@@ -34,6 +34,8 @@ public class Login implements UserDetails, Serializable {
     @Column(nullable = false, updatable = false)
     @CreatedDate
     protected String dataCadastro;
+    @Enumerated(EnumType.STRING)
+    private Roles roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

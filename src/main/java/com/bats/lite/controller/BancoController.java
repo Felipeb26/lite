@@ -23,49 +23,49 @@ import static org.springframework.http.HttpStatus.*;
 @Api(value = "bancos", produces = MediaType.APPLICATION_JSON_VALUE)
 public class BancoController {
 
-	@Autowired
-	private BancoService bancoService;
+    @Autowired
+    private BancoService bancoService;
 
-	@GetMapping("/")
-	@ApiOperation("Traz de forma paginada todos os bancos salvos")
-	public ResponseEntity<PageDTO> findAllPage(@RequestParam(value = "id", required = false) Long id,
-															 @RequestParam(value = "nome", required = false) String nome,
-															 @RequestParam(value = "agencia", required = false) Long agencia,
-															 @RequestParam(value = "conta", required = false) Long conta,
-															 @RequestParam(value = "page", defaultValue = "0") int page,
-															 @RequestParam(value = "size", defaultValue = "10") int size,
-															 @RequestParam(value = "sort", defaultValue = "ASC") Sort.Direction direction) {
+    @GetMapping("/")
+    @ApiOperation("Traz de forma paginada todos os bancos salvos")
+    public ResponseEntity<PageDTO> findAllPage(@RequestParam(value = "id", required = false) Long id,
+                                               @RequestParam(value = "nome", required = false) String nome,
+                                               @RequestParam(value = "agencia", required = false) Long agencia,
+                                               @RequestParam(value = "conta", required = false) Long conta,
+                                               @RequestParam(value = "page", defaultValue = "0") int page,
+                                               @RequestParam(value = "size", defaultValue = "10") int size,
+                                               @RequestParam(value = "sort", defaultValue = "ASC") Sort.Direction direction) {
 
-		return ResponseEntity.ok().body(bancoService.findPaginate(id, nome, agencia, conta,
-			PageRequest.of(page, size, direction, "dataCadastro")));
-	}
+        return ResponseEntity.ok().body(bancoService.findPaginate(id, nome, agencia, conta,
+                PageRequest.of(page, size, direction, "dataCadastro")));
+    }
 
-	@GetMapping("/banco")
-	@ApiOperation("Traz um banco quando informado parametros")
-	public ResponseEntity<List<BancoDTO>> findAll(@RequestParam(value = "id", required = false) Long id,
-																 @RequestParam(value = "nome", required = false) String nome,
-																 @RequestParam(value = "agencia", required = false) Long agencia,
-																 @RequestParam(value = "conta", required = false) Long conta) {
+    @GetMapping("/banco")
+    @ApiOperation("Traz um banco quando informado parametros")
+    public ResponseEntity<List<BancoDTO>> findAll(@RequestParam(value = "id", required = false) Long id,
+                                                  @RequestParam(value = "nome", required = false) String nome,
+                                                  @RequestParam(value = "agencia", required = false) Long agencia,
+                                                  @RequestParam(value = "conta", required = false) Long conta) {
 
-		return ResponseEntity.ok().body(bancoService.findBank(id, nome, agencia, conta));
-	}
+        return ResponseEntity.ok().body(bancoService.findBank(id, nome, agencia, conta));
+    }
 
-	@PostMapping
-	@ApiOperation("Salva o banco")
-	public ResponseEntity<Banco> saveBank(@RequestBody BancoDTO banco) {
-		return new ResponseEntity<>(bancoService.saveBanco(banco), CREATED);
-	}
+    @PostMapping
+    @ApiOperation("Salva o banco")
+    public ResponseEntity<Banco> saveBank(@RequestBody BancoDTO banco) {
+        return new ResponseEntity<>(bancoService.saveBanco(banco), CREATED);
+    }
 
-	@PutMapping
-	@ApiOperation("Atualiza banco")
-	public ResponseEntity<Banco> updateBank(@RequestParam Long id, @Validated @RequestBody Banco banco) {
-		return new ResponseEntity<>(bancoService.updateBanco(id, banco), ACCEPTED);
-	}
+    @PutMapping
+    @ApiOperation("Atualiza banco")
+    public ResponseEntity<Banco> updateBank(@RequestParam Long id, @Validated @RequestBody Banco banco) {
+        return new ResponseEntity<>(bancoService.updateBanco(id, banco), ACCEPTED);
+    }
 
-	@DeleteMapping
-	@ApiOperation("Deleta um banco")
-	public ResponseEntity<?> deleteBank(@RequestParam Long id) {
-		return new ResponseEntity<>(bancoService.deleteBanco(id), OK);
-	}
+    @DeleteMapping
+    @ApiOperation("Deleta um banco")
+    public ResponseEntity<Object> deleteBank(@RequestParam Long id) {
+        return new ResponseEntity<>(bancoService.deleteBanco(id), OK);
+    }
 
 }

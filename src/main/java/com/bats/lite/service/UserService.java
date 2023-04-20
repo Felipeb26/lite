@@ -14,8 +14,6 @@ public interface UserService {
 
     PageDTO findByParamPaged(Long id, String nome, String email, LocalDate dataInicial, LocalDate dataFinal, Pageable pageable);
 
-    List<UserDTO> toListDTO(List<User> users);
-
     UserDTO save(UserDTO user);
 
     UserDTO update(Long id, UserDTO user);

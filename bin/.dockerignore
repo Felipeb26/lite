@@ -1,0 +1,4 @@
+.vscode
+*.log
+.idea
+.apt_generated_tests

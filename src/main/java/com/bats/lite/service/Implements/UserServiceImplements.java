@@ -16,9 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Objects.nonNull;
@@ -28,14 +28,13 @@ import static org.springframework.http.HttpStatus.*;
 public class UserServiceImplements implements UserService {
 
     @Autowired
-    private UserMapper mapper;
-    @Autowired
     private UserRepository repository;
     @Autowired
     private RabbitTemplate template;
     @Autowired
     private LoginRepository loginRepository;
 
+    @Transactional(rollbackFor = {Exception.class})
     public List<UserDTO> findByParam(Long id, String nome, String email, LocalDate dataInicial, LocalDate dataFinal) {
         Specification<User> where = null;
 
@@ -49,9 +48,10 @@ public class UserServiceImplements implements UserService {
         if (users.isEmpty()) {
             throw new BatsException(NO_CONTENT, "Sem usuarios encontrados.");
         }
-        return toListDTO(users);
+        return UserMapper.toListDTO(users);
     }
 
+    @Transactional(rollbackFor = {Exception.class})
     public PageDTO findByParamPaged(Long id, String nome, String email, LocalDate dataInicial, LocalDate dataFinal, Pageable pageable) {
         Specification<User> where = null;
 
@@ -67,13 +67,7 @@ public class UserServiceImplements implements UserService {
             throw new BatsException(NO_CONTENT, "Sem usuarios cadastrados");
         }
 
-        return new PageDTO<>(page, this::toListDTO);
-    }
-
-    public List<UserDTO> toListDTO(List<User> users) {
-        List<UserDTO> dtos = new ArrayList<>();
-        users.forEach(it -> dtos.add(mapper.toDTO(it)));
-        return dtos;
+        return new PageDTO<>(page, UserMapper::toListDTO);
     }
 
     public UserDTO save(UserDTO user) {
@@ -85,10 +79,11 @@ public class UserServiceImplements implements UserService {
                     .email(user.getEmail())
                     .senha(user.getSenha()).build();
 
-            var usuario = mapper.toEntity(user, login);
-            template.convertAndSend("usuario.cadastrado", mapper.toDTO(repository.save(usuario)));
+            var usuario = UserMapper.toEntity(user);
+            usuario.setLogin(login);
+            template.convertAndSend("usuario.cadastrado", UserMapper.toDTO(repository.save(usuario)));
             loginRepository.save(login);
-            return mapper.toDTO(repository.save(usuario));
+            return UserMapper.toDTO(repository.save(usuario));
         }
         throw new BatsException(BAD_REQUEST, "Email já cadastrado");
     }
@@ -99,8 +94,8 @@ public class UserServiceImplements implements UserService {
         if (list.isEmpty()) {
             throw new BatsException(NOT_FOUND, "não encontrado");
         }
-        var userDTO = repository.save(mapper.toEntity(user));
-        return mapper.toDTO(userDTO);
+        var userDTO = repository.save(UserMapper.toEntity(user));
+        return UserMapper.toDTO(userDTO);
     }
 
     public String delete(Long id) {

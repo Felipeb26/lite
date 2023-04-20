@@ -3,6 +3,14 @@ logging:
     com.bats.lite.feign: DEBUG
     com.bats.lite.service: TRACE
 
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 40000
+        readTimeout: 40000
+        loggerLevel: full
+
 server:
   compression:
     mime-types:
@@ -15,6 +23,19 @@ server:
     port: 9091
 
 spring:
+  cache:
+#    type: jcache
+    cache-names:
+      - login
+      - cota
+      - banco
+      - user
+#    jcache:
+#      provider: com.hazelcast.cache.impl.HazelcastServerCachingProvider
+#      config: classpath:hazelcast.xml
+  main:
+    banner-mode: LOG
+#    allow-bean-definition-overriding: true
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
@@ -54,6 +75,16 @@ spring:
     username: guest
     password: guest
 
+bucket4j:
+  enabled: true
+  filters:
+    - cache-name: buckets
+      url: .*
+      rate-limits:
+        - bandwidths:
+            - capacity: 5
+              time: 10
+              unit: seconds
 
 request:
   feign:
@@ -61,15 +92,6 @@ request:
     url-cotacao: "https://economia.awesomeapi.com.br/"
     ultimas: "/last/"
     diario: "/daily/"
-
-feign:
-  client:
-    config:
-      default:
-        connectTimeout: 40000
-        readTimeout: 40000
-        loggerLevel: full
-
 
 api:
   security-secret: ${JWT:GETSHUGA_TENSHOU}

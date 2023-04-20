@@ -1,7 +1,5 @@
 package com.bats.lite.controller;
 
-import com.bats.lite.aop.files.FileGenerate;
-import com.bats.lite.aop.files.FileType;
 import com.bats.lite.configuration.FilesConfig;
 import com.bats.lite.entity.Cotacao;
 import com.bats.lite.service.CotacaoService;
@@ -9,18 +7,22 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.Header;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@CrossOrigin("*")
 @RequestMapping(value = "/cotacao")
 @Api("Feign de api de cotacao")
+@CacheConfig(cacheNames = "cota")
 public class CotacaoController {
 
     @Autowired
@@ -28,7 +30,7 @@ public class CotacaoController {
     @Autowired
     private FilesConfig filesConfig;
 
-    @FileGenerate(ClassName = Cotacao.class, FILE_TYPE = FileType.PDF, watermark = "/files/shadow.png")
+    @Cacheable
     @GetMapping("/arquivo")
     @ApiOperation("Regasta as cotação de acordo com as moedas informadas")
     public Object cotacaoList() {
@@ -36,12 +38,14 @@ public class CotacaoController {
         return ResponseEntity.ok().body(file);
     }
 
+    @Cacheable
     @GetMapping("date")
     @ApiOperation("Traz lista de cotacoes do dia de acordo com moeda e dias")
     public List<Cotacao> cotacoaPorData(@RequestParam(value = "days", defaultValue = "7") int days) {
         return cotacaoService.perDate(days);
     }
 
+    @Cacheable
     @GetMapping("between-dates")
     @ApiOperation("Traz lista de itens de acordo com quantidade e entre datas")
     public List<Cotacao> cotacaoEntreDatas(@RequestParam(value = "days", defaultValue = "7") int days,

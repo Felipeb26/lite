@@ -1,7 +1,6 @@
 package com.bats.lite.dto;
 
 
-import com.bats.lite.entity.Banco;
 import com.bats.lite.entity.Login;
 import com.bats.lite.enums.Roles;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -19,13 +18,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
-	private String nome;
-	private String email;
-	private String senha;
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	private LocalDate nascimento;
-	private Roles roles;
-	private List<Banco> bancos;
-	private Login login;
+    private String nome;
+    private String email;
+    private String senha;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate nascimento;
+    private Roles roles;
+    private List<BancoDTO> bancos;
+    private LoginDTO login;
 }

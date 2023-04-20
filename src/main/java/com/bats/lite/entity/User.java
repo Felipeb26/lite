@@ -1,8 +1,6 @@
 package com.bats.lite.entity;
 
-import com.bats.lite.enums.Roles;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,16 +26,10 @@ public class User extends AbstractEntity<User> {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate nascimento;
-    @Enumerated(EnumType.STRING)
-    private Roles roles;
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "userId")
-    @JsonIgnore
     private List<Banco> bancos;
-
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "loginId")
-    @JsonIgnore
     private Login login;
 }

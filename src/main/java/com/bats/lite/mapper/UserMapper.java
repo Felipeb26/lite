@@ -1,46 +1,42 @@
 package com.bats.lite.mapper;
 
 import com.bats.lite.dto.UserDTO;
-import com.bats.lite.entity.Login;
 import com.bats.lite.entity.User;
-import org.springframework.stereotype.Component;
+import lombok.experimental.UtilityClass;
 
-@Component
+import java.util.List;
+import java.util.stream.Collectors;
+
+@UtilityClass
 public class UserMapper {
 
-    public User toEntity(UserDTO dto) {
+    public static List<User> toListEntity(List<UserDTO> usersDtos) {
+        return usersDtos.stream().map(UserMapper::toEntity).collect(Collectors.toList());
+    }
+
+    public static List<UserDTO> toListDTO(List<User> users) {
+        return users.stream().map(UserMapper::toDTO).collect(Collectors.toList());
+    }
+
+    public static User toEntity(UserDTO dto) {
         return User.builder()
                 .nome(dto.getNome())
                 .nascimento(dto.getNascimento())
                 .email(dto.getEmail())
                 .senha(dto.getSenha())
-                .roles(dto.getRoles())
-                .bancos(dto.getBancos())
-                .login(dto.getLogin())
+                .bancos(BancoMapper.dtosParaBancos(dto.getBancos()))
+                .login(LoginMapper.dtoToLogin(dto.getLogin()))
                 .build();
     }
 
-    public User toEntity(UserDTO dto, Login login) {
-        return User.builder()
-                .nome(dto.getNome())
-                .nascimento(dto.getNascimento())
-                .email(dto.getEmail())
-                .senha(dto.getSenha())
-                .roles(dto.getRoles())
-                .bancos(dto.getBancos())
-                .login(login)
-                .build();
-    }
-
-    public UserDTO toDTO(User entity) {
+    public static UserDTO toDTO(User entity) {
         return UserDTO.builder()
                 .nome(entity.getNome())
                 .nascimento(entity.getNascimento())
                 .email(entity.getEmail())
                 .senha(entity.getSenha())
-//                .roles(entity.getRoles())
-                .bancos(entity.getBancos())
-//                .login(entity.getLogin())
+                .bancos(BancoMapper.bancosParaDTOS(entity.getBancos()))
+                .login(LoginMapper.entitytoDTO(entity.getLogin()))
                 .build();
     }
 

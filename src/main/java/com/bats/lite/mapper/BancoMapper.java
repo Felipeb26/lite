@@ -2,14 +2,16 @@ package com.bats.lite.mapper;
 
 import com.bats.lite.dto.BancoDTO;
 import com.bats.lite.entity.Banco;
+import lombok.experimental.UtilityClass;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
+@UtilityClass
 public class BancoMapper {
-	public BancoDTO bancoParaDTO(Banco entity) {
+
+	public static BancoDTO bancoParaDTO(Banco entity) {
 		return BancoDTO.builder()
 			.nome(entity.getNome())
 			.conta(entity.getConta())
@@ -20,8 +22,7 @@ public class BancoMapper {
 			.emprestimo(entity.getEmprestimo())
 			.build();
 	}
-
-	public Banco dtoParaBanco(BancoDTO dto) {
+	public static Banco dtoParaBanco(BancoDTO dto) {
 		return Banco.builder()
 			.nome(dto.getNome())
 			.conta(dto.getConta())
@@ -32,15 +33,14 @@ public class BancoMapper {
 			.emprestimo(dto.getEmprestimo())
 			.build();
 	}
-
-	public List<BancoDTO> bancosParaDTOS(List<Banco> bancos) {
+	public static List<BancoDTO> bancosParaDTOS(List<Banco> bancos) {
 		return bancos.stream()
-			.map(this::bancoParaDTO)
+			.map(BancoMapper::bancoParaDTO)
 			.collect(Collectors.toList());
 	}
-	public List<Banco> dtosParaBancos(List<BancoDTO> bancoDTOS) {
+	public static List<Banco> dtosParaBancos(List<BancoDTO> bancoDTOS) {
 		return bancoDTOS.stream()
-			.map(this::dtoParaBanco)
+			.map(BancoMapper::dtoParaBanco)
 			.collect(Collectors.toList());
 	}
 }
