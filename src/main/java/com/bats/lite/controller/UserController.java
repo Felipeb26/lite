@@ -3,8 +3,8 @@ package com.bats.lite.controller;
 import com.bats.lite.dto.UserDTO;
 import com.bats.lite.entity.PageDTO;
 import com.bats.lite.service.UserService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -22,7 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-@Api("usuarios")
+@Tag(name = "usuarios")
 @CacheConfig(cacheNames = "user")
 public class UserController {
 
@@ -31,7 +31,7 @@ public class UserController {
 
     @Cacheable
     @GetMapping
-    @ApiOperation("retorna todos os usuarios")
+    @Operation(summary = "retorna todos os usuarios")
     public ResponseEntity<PageDTO> showAllUsers(@RequestParam(required = false) Long id,
                                                 @RequestParam(required = false) String nome,
                                                 @RequestParam(required = false) String email,
@@ -46,7 +46,7 @@ public class UserController {
 
     @Cacheable
     @GetMapping("/param")
-    @ApiOperation("Pega usuario por parametro")
+    @Operation(summary = "Pega usuario por parametro")
     public ResponseEntity<List<UserDTO>> showUserPerParam(@RequestParam(required = false) Long id,
                                                           @RequestParam(required = false) String nome,
                                                           @RequestParam(required = false) String email,
@@ -58,21 +58,21 @@ public class UserController {
 
     @CacheEvict("user")
     @PostMapping
-    @ApiOperation("Salva usuario")
+    @Operation(summary = "Salva usuario")
     public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO user) {
         return ResponseEntity.ok(service.save(user));
     }
 
     @CachePut("user")
     @PutMapping
-    @ApiOperation("Atualiza usuario")
+    @Operation(summary = "Atualiza usuario")
     public ResponseEntity<UserDTO> updateUser(@RequestParam Long id, @RequestBody UserDTO user) {
         return ResponseEntity.ok(service.update(id, user));
     }
 
     @CacheEvict("user")
     @DeleteMapping
-    @ApiOperation("Deletar usuario")
+    @Operation(summary = "Deletar usuario")
     public ResponseEntity<?> deleteUser(@RequestParam Long id) {
         return ResponseEntity.ok(service.delete(id));
     }

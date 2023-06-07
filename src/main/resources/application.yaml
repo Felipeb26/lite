@@ -1,15 +1,15 @@
 logging:
   level:
+    web: INFO
     com.bats.lite.feign: DEBUG
     com.bats.lite.service: TRACE
-
-feign:
-  client:
-    config:
-      default:
-        connectTimeout: 40000
-        readTimeout: 40000
-        loggerLevel: full
+  file:
+    name: logs/API-Carmesim.log
+    logback:
+      rollingpolicy:
+        max-file-size: 1mb
+        max-history: 10
+        clean-history-on-start: true
 
 server:
   compression:
@@ -20,27 +20,76 @@ server:
   port: 9091
   servlet:
     context-path: /batsworks
-    port: 9091
+
+  tomcat:
+    accesslog:
+      directory: logs
+      enabled: true
+      max-days: 1
+      prefix: ${spring.application.name}
+    mbeanregistry:
+      enabled: true
+
+management:
+  info:
+    build:
+      enabled: true
+    git:
+      mode: simple
+  trace:
+    http:
+      enabled: true
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      show-details: always
+      probes:
+        enabled: true
+    env:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 40000
+        readTimeout: 40000
+        loggerLevel: full
 
 spring:
   cache:
-#    type: jcache
+    type: JCACHE
     cache-names:
       - login
       - cota
       - banco
       - user
-#    jcache:
-#      provider: com.hazelcast.cache.impl.HazelcastServerCachingProvider
-#      config: classpath:hazelcast.xml
-  main:
-    banner-mode: LOG
-#    allow-bean-definition-overriding: true
+    jcache:
+      provider: com.hazelcast.cache.impl.HazelcastServerCachingProvider
+      config: classpath:hazelcast.xml
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
   application:
-    name: Lites
+    name: BatsWorksLite
+  jmx:
+    enabled: true
+  boot:
+    admin:
+      client:
+        url: https://batsworks-admin.azurewebsites.net/applicationsTets
+        enabled: true
+        auto-registration: true
+        instance:
+          service-url: http://localhost:9091/batsworks/
+          name: ${spring.application.name::BatsWorksLite}
+        username: felipe
+        password: 2626
   datasource:
     url: jdbc:sqlite:src/main/resources/main.db
     driver-class-name: org.sqlite.JDBC
@@ -56,6 +105,11 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: update
+    properties:
+      cache:
+      use:
+        secondlevel:
+          cache: false
   mail:
     default-encoding: UTF-8
     host: smtp.gmail.com
@@ -82,7 +136,7 @@ bucket4j:
       url: .*
       rate-limits:
         - bandwidths:
-            - capacity: 5
+            - capacity: 150
               time: 10
               unit: seconds
 

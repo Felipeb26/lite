@@ -2,6 +2,7 @@ package com.bats.lite.dto;
 
 import lombok.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 @ToString

@@ -1,0 +1,164 @@
+2023-05-05 14:00:55.411  INFO 10696 --- [restartedMain] com.bats.lite.LiteApplication            : Starting LiteApplication using Java 17.0.6 on MULTI-194 with PID 10696 (C:\Users\felipe.silva\ROBOS\lite\target\classes started by felipe.silva in C:\Users\felipe.silva\ROBOS\lite)
+2023-05-05 14:00:55.416  INFO 10696 --- [restartedMain] com.bats.lite.LiteApplication            : No active profile set, falling back to 1 default profile: "default"
+2023-05-05 14:00:55.473  INFO 10696 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-05-05 14:00:56.769  INFO 10696 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-05-05 14:00:56.846  INFO 10696 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 68 ms. Found 4 JPA repository interfaces.
+2023-05-05 14:00:57.100  INFO 10696 --- [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=583727fa-6fa8-3db7-9a48-a559a0712e28
+2023-05-05 14:00:57.496  INFO 10696 --- [restartedMain] c.h.i.config.AbstractConfigLocator       : Loading 'hazelcast.xml' from the classpath.
+2023-05-05 14:00:58.669  WARN 10696 --- [restartedMain] c.h.i.impl.HazelcastInstanceFactory      : Hazelcast is starting in a Java modular environment (Java 9 and newer) but without proper access to required Java packages. Use additional Java arguments to provide Hazelcast access to Java internal API. The internal API access is used to get the best performance results. Arguments to be used:
+ --add-modules java.se --add-exports java.base/jdk.internal.ref=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.nio=ALL-UNNAMED --add-opens java.base/sun.nio.ch=ALL-UNNAMED --add-opens java.management/sun.management=ALL-UNNAMED --add-opens jdk.management/com.sun.management.internal=ALL-UNNAMED
+2023-05-05 14:00:58.752  INFO 10696 --- [restartedMain] com.hazelcast.system                     : [192.168.1.226]:5701 [dev] [4.2.4] Hazelcast 4.2.4 (20211220 - 25f0049) starting at [192.168.1.226]:5701
+2023-05-05 14:00:59.117  INFO 10696 --- [restartedMain] c.h.s.d.integration.DiscoveryService     : [192.168.1.226]:5701 [dev] [4.2.4] No discovery strategy is applicable for auto-detection
+2023-05-05 14:00:59.210  INFO 10696 --- [restartedMain] com.hazelcast.instance.impl.Node         : [192.168.1.226]:5701 [dev] [4.2.4] Using Multicast discovery
+2023-05-05 14:00:59.214  WARN 10696 --- [restartedMain] com.hazelcast.cp.CPSubsystem             : [192.168.1.226]:5701 [dev] [4.2.4] CP Subsystem is not enabled. CP data structures will operate in UNSAFE mode! Please note that UNSAFE mode will not provide strong consistency guarantees.
+2023-05-05 14:00:59.505  INFO 10696 --- [restartedMain] c.h.internal.diagnostics.Diagnostics     : [192.168.1.226]:5701 [dev] [4.2.4] Diagnostics disabled. To enable add -Dhazelcast.diagnostics.enabled=true to the JVM arguments.
+2023-05-05 14:00:59.512  INFO 10696 --- [restartedMain] com.hazelcast.core.LifecycleService      : [192.168.1.226]:5701 [dev] [4.2.4] [192.168.1.226]:5701 is STARTING
+2023-05-05 14:01:02.388  INFO 10696 --- [restartedMain] c.h.internal.cluster.ClusterService      : [192.168.1.226]:5701 [dev] [4.2.4] 
+
+Members {size:1, ver:1} [
+	Member [192.168.1.226]:5701 - f2b377df-7cf7-4aa0-bdc4-8ebaa533681c this
+]
+
+2023-05-05 14:01:02.404  INFO 10696 --- [restartedMain] com.hazelcast.core.LifecycleService      : [192.168.1.226]:5701 [dev] [4.2.4] [192.168.1.226]:5701 is STARTED
+2023-05-05 14:01:03.004  INFO 10696 --- [restartedMain] com.hazelcast.system                     : [192.168.1.226]:5702 [dev] [4.2.4] Hazelcast 4.2.4 (20211220 - 25f0049) starting at [192.168.1.226]:5702
+2023-05-05 14:01:03.014  INFO 10696 --- [restartedMain] c.h.s.d.integration.DiscoveryService     : [192.168.1.226]:5702 [dev] [4.2.4] No discovery strategy is applicable for auto-detection
+2023-05-05 14:01:03.031  INFO 10696 --- [restartedMain] com.hazelcast.instance.impl.Node         : [192.168.1.226]:5702 [dev] [4.2.4] Using Multicast discovery
+2023-05-05 14:01:03.031  WARN 10696 --- [restartedMain] com.hazelcast.cp.CPSubsystem             : [192.168.1.226]:5702 [dev] [4.2.4] CP Subsystem is not enabled. CP data structures will operate in UNSAFE mode! Please note that UNSAFE mode will not provide strong consistency guarantees.
+2023-05-05 14:01:03.037  INFO 10696 --- [restartedMain] c.h.internal.diagnostics.Diagnostics     : [192.168.1.226]:5702 [dev] [4.2.4] Diagnostics disabled. To enable add -Dhazelcast.diagnostics.enabled=true to the JVM arguments.
+2023-05-05 14:01:03.038  INFO 10696 --- [restartedMain] com.hazelcast.core.LifecycleService      : [192.168.1.226]:5702 [dev] [4.2.4] [192.168.1.226]:5702 is STARTING
+2023-05-05 14:01:03.125  INFO 10696 --- [restartedMain] c.h.i.cluster.impl.MulticastJoiner       : [192.168.1.226]:5702 [dev] [4.2.4] Trying to join to discovered node: [192.168.1.226]:5701
+2023-05-05 14:01:03.138  INFO 10696 --- [hz.brave_ellis.IO.thread-in-0] c.h.i.server.tcp.TcpServerConnection     : [192.168.1.226]:5701 [dev] [4.2.4] Initialized new cluster connection between /192.168.1.226:5701 and /192.168.1.226:61147
+2023-05-05 14:01:03.139  INFO 10696 --- [hz.file:/C:/Users/felipe.silva/ROBOS/lite/target/classes/hazelcast.xml.IO.thread-in-0] c.h.i.server.tcp.TcpServerConnection     : [192.168.1.226]:5702 [dev] [4.2.4] Initialized new cluster connection between /192.168.1.226:61147 and /192.168.1.226:5701
+2023-05-05 14:01:09.178  INFO 10696 --- [hz.brave_ellis.priority-generic-operation.thread-0] c.h.internal.cluster.ClusterService      : [192.168.1.226]:5701 [dev] [4.2.4] 
+
+Members {size:2, ver:2} [
+	Member [192.168.1.226]:5701 - f2b377df-7cf7-4aa0-bdc4-8ebaa533681c this
+	Member [192.168.1.226]:5702 - 4044c347-d230-4ab9-8948-a6a4a1cf2239
+]
+
+2023-05-05 14:01:09.181  INFO 10696 --- [hz.file:/C:/Users/felipe.silva/ROBOS/lite/target/classes/hazelcast.xml.priority-generic-operation.thread-0] c.h.internal.cluster.ClusterService      : [192.168.1.226]:5702 [dev] [4.2.4] 
+
+Members {size:2, ver:2} [
+	Member [192.168.1.226]:5701 - f2b377df-7cf7-4aa0-bdc4-8ebaa533681c
+	Member [192.168.1.226]:5702 - 4044c347-d230-4ab9-8948-a6a4a1cf2239 this
+]
+
+2023-05-05 14:01:10.176  INFO 10696 --- [restartedMain] com.hazelcast.core.LifecycleService      : [192.168.1.226]:5702 [dev] [4.2.4] [192.168.1.226]:5702 is STARTED
+2023-05-05 14:01:10.186  INFO 10696 --- [hz.brave_ellis.generic-operation.thread-2] com.hazelcast.cache.impl.CacheService    : [192.168.1.226]:5701 [dev] [4.2.4] Added cache config: CacheConfig{name='login', managerPrefix='/hz/file:/C:/Users/felipe.silva/ROBOS/lite/target/classes/hazelcast.xml/org.springframework.boot.devtools.restart.classloader.RestartClassLoader@71d2b13c/', inMemoryFormat=BINARY, backupCount=1, hotRestart=HotRestartConfig{enabled=false, fsync=false}, wanReplicationRef=null}
+2023-05-05 14:01:10.188  INFO 10696 --- [ForkJoinPool.commonPool-worker-1] com.hazelcast.cache.impl.CacheService    : [192.168.1.226]:5702 [dev] [4.2.4] Added cache config: CacheConfig{name='login', managerPrefix='/hz/file:/C:/Users/felipe.silva/ROBOS/lite/target/classes/hazelcast.xml/org.springframework.boot.devtools.restart.classloader.RestartClassLoader@71d2b13c/', inMemoryFormat=BINARY, backupCount=1, hotRestart=HotRestartConfig{enabled=false, fsync=false}, wanReplicationRef=null}
+2023-05-05 14:01:10.202  INFO 10696 --- [hz.brave_ellis.generic-operation.thread-3] com.hazelcast.cache.impl.CacheService    : [192.168.1.226]:5701 [dev] [4.2.4] Added cache config: CacheConfig{name='cota', managerPrefix='/hz/file:/C:/Users/felipe.silva/ROBOS/lite/target/classes/hazelcast.xml/org.springframework.boot.devtools.restart.classloader.RestartClassLoader@71d2b13c/', inMemoryFormat=BINARY, backupCount=1, hotRestart=HotRestartConfig{enabled=false, fsync=false}, wanReplicationRef=null}
+2023-05-05 14:01:10.203  INFO 10696 --- [ForkJoinPool.commonPool-worker-1] com.hazelcast.cache.impl.CacheService    : [192.168.1.226]:5702 [dev] [4.2.4] Added cache config: CacheConfig{name='cota', managerPrefix='/hz/file:/C:/Users/felipe.silva/ROBOS/lite/target/classes/hazelcast.xml/org.springframework.boot.devtools.restart.classloader.RestartClassLoader@71d2b13c/', inMemoryFormat=BINARY, backupCount=1, hotRestart=HotRestartConfig{enabled=false, fsync=false}, wanReplicationRef=null}
+2023-05-05 14:01:10.205  INFO 10696 --- [hz.brave_ellis.generic-operation.thread-0] com.hazelcast.cache.impl.CacheService    : [192.168.1.226]:5701 [dev] [4.2.4] Added cache config: CacheConfig{name='banco', managerPrefix='/hz/file:/C:/Users/felipe.silva/ROBOS/lite/target/classes/hazelcast.xml/org.springframework.boot.devtools.restart.classloader.RestartClassLoader@71d2b13c/', inMemoryFormat=BINARY, backupCount=1, hotRestart=HotRestartConfig{enabled=false, fsync=false}, wanReplicationRef=null}
+2023-05-05 14:01:10.205  INFO 10696 --- [ForkJoinPool.commonPool-worker-1] com.hazelcast.cache.impl.CacheService    : [192.168.1.226]:5702 [dev] [4.2.4] Added cache config: CacheConfig{name='banco', managerPrefix='/hz/file:/C:/Users/felipe.silva/ROBOS/lite/target/classes/hazelcast.xml/org.springframework.boot.devtools.restart.classloader.RestartClassLoader@71d2b13c/', inMemoryFormat=BINARY, backupCount=1, hotRestart=HotRestartConfig{enabled=false, fsync=false}, wanReplicationRef=null}
+2023-05-05 14:01:10.207  INFO 10696 --- [hz.brave_ellis.generic-operation.thread-1] com.hazelcast.cache.impl.CacheService    : [192.168.1.226]:5701 [dev] [4.2.4] Added cache config: CacheConfig{name='user', managerPrefix='/hz/file:/C:/Users/felipe.silva/ROBOS/lite/target/classes/hazelcast.xml/org.springframework.boot.devtools.restart.classloader.RestartClassLoader@71d2b13c/', inMemoryFormat=BINARY, backupCount=1, hotRestart=HotRestartConfig{enabled=false, fsync=false}, wanReplicationRef=null}
+2023-05-05 14:01:10.208  INFO 10696 --- [ForkJoinPool.commonPool-worker-1] com.hazelcast.cache.impl.CacheService    : [192.168.1.226]:5702 [dev] [4.2.4] Added cache config: CacheConfig{name='user', managerPrefix='/hz/file:/C:/Users/felipe.silva/ROBOS/lite/target/classes/hazelcast.xml/org.springframework.boot.devtools.restart.classloader.RestartClassLoader@71d2b13c/', inMemoryFormat=BINARY, backupCount=1, hotRestart=HotRestartConfig{enabled=false, fsync=false}, wanReplicationRef=null}
+2023-05-05 14:01:10.281  INFO 10696 --- [hz.brave_ellis.generic-operation.thread-2] com.hazelcast.cache.impl.CacheService    : [192.168.1.226]:5701 [dev] [4.2.4] Added cache config: CacheConfig{name='buckets', managerPrefix='/hz/file:/C:/Users/felipe.silva/ROBOS/lite/target/classes/hazelcast.xml/org.springframework.boot.devtools.restart.classloader.RestartClassLoader@71d2b13c/', inMemoryFormat=BINARY, backupCount=1, hotRestart=HotRestartConfig{enabled=false, fsync=false}, wanReplicationRef=null}
+2023-05-05 14:01:10.282  INFO 10696 --- [ForkJoinPool.commonPool-worker-1] com.hazelcast.cache.impl.CacheService    : [192.168.1.226]:5702 [dev] [4.2.4] Added cache config: CacheConfig{name='buckets', managerPrefix='/hz/file:/C:/Users/felipe.silva/ROBOS/lite/target/classes/hazelcast.xml/org.springframework.boot.devtools.restart.classloader.RestartClassLoader@71d2b13c/', inMemoryFormat=BINARY, backupCount=1, hotRestart=HotRestartConfig{enabled=false, fsync=false}, wanReplicationRef=null}
+2023-05-05 14:01:10.298  INFO 10696 --- [restartedMain] s.Bucket4JAutoConfigurationServletFilter : create-servlet-filter;1;buckets;.*
+2023-05-05 14:01:10.535  INFO 10696 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9091 (http)
+2023-05-05 14:01:10.629  INFO 10696 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-05-05 14:01:10.629  INFO 10696 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.58]
+2023-05-05 14:01:10.745  INFO 10696 --- [restartedMain] o.a.c.c.C.[.[localhost].[/batsworks]     : Initializing Spring embedded WebApplicationContext
+2023-05-05 14:01:10.745  INFO 10696 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 15270 ms
+2023-05-05 14:01:10.860  INFO 10696 --- [restartedMain] o.s.b.a.e.web.ServletEndpointRegistrar   : Registered '/actuator/jolokia' to jolokia-actuator-endpoint
+2023-05-05 14:01:10.970  INFO 10696 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-05-05 14:01:11.012  INFO 10696 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.5.Final
+2023-05-05 14:01:11.164  INFO 10696 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-05 14:01:11.243  INFO 10696 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-05-05 14:01:11.334  INFO 10696 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-05-05 14:01:11.348  INFO 10696 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: com.bats.lite.dialect.SQLiteDialect
+2023-05-05 14:01:11.929  INFO 10696 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-05 14:01:11.935  INFO 10696 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-05-05 14:01:13.075  WARN 10696 --- [restartedMain] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2023-05-05 14:01:16.514  WARN 10696 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.boot.autoconfigure.mail.MailSenderValidatorAutoConfiguration': Bean instantiation via constructor failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.boot.autoconfigure.mail.MailSenderValidatorAutoConfiguration]: Constructor threw exception; nested exception is java.lang.IllegalStateException: Mail server is not available
+2023-05-05 14:01:16.523  INFO 10696 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-05-05 14:01:16.525  INFO 10696 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-05-05 14:01:16.527  INFO 10696 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-05-05 14:01:16.529  INFO 10696 --- [restartedMain] com.hazelcast.core.LifecycleService      : [192.168.1.226]:5702 [dev] [4.2.4] [192.168.1.226]:5702 is SHUTTING_DOWN
+2023-05-05 14:01:16.533  INFO 10696 --- [restartedMain] com.hazelcast.instance.impl.Node         : [192.168.1.226]:5702 [dev] [4.2.4] Shutting down multicast service...
+2023-05-05 14:01:16.534  INFO 10696 --- [restartedMain] com.hazelcast.instance.impl.Node         : [192.168.1.226]:5702 [dev] [4.2.4] Shutting down connection manager...
+2023-05-05 14:01:16.535  INFO 10696 --- [restartedMain] c.h.i.server.tcp.TcpServerConnection     : [192.168.1.226]:5702 [dev] [4.2.4] Connection[id=1, /192.168.1.226:61147->/192.168.1.226:5701, qualifier=null, endpoint=[192.168.1.226]:5701, alive=false, connectionType=MEMBER, planeIndex=0] closed. Reason: TcpServer is stopping
+2023-05-05 14:01:16.535  INFO 10696 --- [hz.brave_ellis.IO.thread-in-0] c.h.i.server.tcp.TcpServerConnection     : [192.168.1.226]:5701 [dev] [4.2.4] Connection[id=1, /192.168.1.226:5701->/192.168.1.226:61147, qualifier=null, endpoint=[192.168.1.226]:5702, alive=false, connectionType=MEMBER, planeIndex=0] closed. Reason: Connection closed by the other side
+2023-05-05 14:01:16.537  INFO 10696 --- [restartedMain] com.hazelcast.instance.impl.Node         : [192.168.1.226]:5702 [dev] [4.2.4] Shutting down node engine...
+2023-05-05 14:01:16.537  INFO 10696 --- [hz.brave_ellis.cached.thread-5] c.h.i.server.tcp.TcpServerConnector      : [192.168.1.226]:5701 [dev] [4.2.4] Connecting to /192.168.1.226:5702, timeout: 10000, bind-any: true
+2023-05-05 14:01:16.538  INFO 10696 --- [restartedMain] com.hazelcast.cache.impl.CacheService    : [192.168.1.226]:5702 [dev] [4.2.4] Removed cache config: CacheConfig{name='banco', managerPrefix='/hz/file:/C:/Users/felipe.silva/ROBOS/lite/target/classes/hazelcast.xml/org.springframework.boot.devtools.restart.classloader.RestartClassLoader@71d2b13c/', inMemoryFormat=BINARY, backupCount=1, hotRestart=HotRestartConfig{enabled=false, fsync=false}, wanReplicationRef=null}
+2023-05-05 14:01:16.540  INFO 10696 --- [restartedMain] com.hazelcast.cache.impl.CacheService    : [192.168.1.226]:5702 [dev] [4.2.4] Removed cache config: CacheConfig{name='login', managerPrefix='/hz/file:/C:/Users/felipe.silva/ROBOS/lite/target/classes/hazelcast.xml/org.springframework.boot.devtools.restart.classloader.RestartClassLoader@71d2b13c/', inMemoryFormat=BINARY, backupCount=1, hotRestart=HotRestartConfig{enabled=false, fsync=false}, wanReplicationRef=null}
+2023-05-05 14:01:16.541  INFO 10696 --- [restartedMain] com.hazelcast.cache.impl.CacheService    : [192.168.1.226]:5702 [dev] [4.2.4] Removed cache config: CacheConfig{name='user', managerPrefix='/hz/file:/C:/Users/felipe.silva/ROBOS/lite/target/classes/hazelcast.xml/org.springframework.boot.devtools.restart.classloader.RestartClassLoader@71d2b13c/', inMemoryFormat=BINARY, backupCount=1, hotRestart=HotRestartConfig{enabled=false, fsync=false}, wanReplicationRef=null}
+2023-05-05 14:01:16.541  INFO 10696 --- [restartedMain] com.hazelcast.cache.impl.CacheService    : [192.168.1.226]:5702 [dev] [4.2.4] Removed cache config: CacheConfig{name='buckets', managerPrefix='/hz/file:/C:/Users/felipe.silva/ROBOS/lite/target/classes/hazelcast.xml/org.springframework.boot.devtools.restart.classloader.RestartClassLoader@71d2b13c/', inMemoryFormat=BINARY, backupCount=1, hotRestart=HotRestartConfig{enabled=false, fsync=false}, wanReplicationRef=null}
+2023-05-05 14:01:16.541  INFO 10696 --- [restartedMain] com.hazelcast.cache.impl.CacheService    : [192.168.1.226]:5702 [dev] [4.2.4] Removed cache config: CacheConfig{name='cota', managerPrefix='/hz/file:/C:/Users/felipe.silva/ROBOS/lite/target/classes/hazelcast.xml/org.springframework.boot.devtools.restart.classloader.RestartClassLoader@71d2b13c/', inMemoryFormat=BINARY, backupCount=1, hotRestart=HotRestartConfig{enabled=false, fsync=false}, wanReplicationRef=null}
+2023-05-05 14:01:16.546  INFO 10696 --- [restartedMain] c.hazelcast.instance.impl.NodeExtension  : [192.168.1.226]:5702 [dev] [4.2.4] Destroying node NodeExtension.
+2023-05-05 14:01:16.547  INFO 10696 --- [restartedMain] com.hazelcast.instance.impl.Node         : [192.168.1.226]:5702 [dev] [4.2.4] Hazelcast Shutdown is completed in 16 ms.
+2023-05-05 14:01:16.547  INFO 10696 --- [restartedMain] com.hazelcast.core.LifecycleService      : [192.168.1.226]:5702 [dev] [4.2.4] [192.168.1.226]:5702 is SHUTDOWN
+2023-05-05 14:01:16.547  INFO 10696 --- [restartedMain] com.hazelcast.core.LifecycleService      : [192.168.1.226]:5701 [dev] [4.2.4] [192.168.1.226]:5701 is SHUTTING_DOWN
+2023-05-05 14:01:16.548  INFO 10696 --- [restartedMain] com.hazelcast.instance.impl.Node         : [192.168.1.226]:5701 [dev] [4.2.4] Shutting down multicast service...
+2023-05-05 14:01:16.548  INFO 10696 --- [restartedMain] com.hazelcast.instance.impl.Node         : [192.168.1.226]:5701 [dev] [4.2.4] Shutting down connection manager...
+2023-05-05 14:01:16.548  INFO 10696 --- [restartedMain] com.hazelcast.instance.impl.Node         : [192.168.1.226]:5701 [dev] [4.2.4] Shutting down node engine...
+2023-05-05 14:01:16.548  INFO 10696 --- [hz.brave_ellis.cached.thread-5] c.h.i.server.tcp.TcpServerConnector      : [192.168.1.226]:5701 [dev] [4.2.4] Could not connect to: /192.168.1.226:5702. Reason: IOException[null to address /192.168.1.226:5702]
+2023-05-05 14:01:16.549  INFO 10696 --- [hz.brave_ellis.cached.thread-5] c.h.i.cluster.impl.MulticastJoiner       : [192.168.1.226]:5701 [dev] [4.2.4] [192.168.1.226]:5702 is added to the blacklist.
+2023-05-05 14:01:16.549  INFO 10696 --- [restartedMain] com.hazelcast.cache.impl.CacheService    : [192.168.1.226]:5701 [dev] [4.2.4] Removed cache config: CacheConfig{name='banco', managerPrefix='/hz/file:/C:/Users/felipe.silva/ROBOS/lite/target/classes/hazelcast.xml/org.springframework.boot.devtools.restart.classloader.RestartClassLoader@71d2b13c/', inMemoryFormat=BINARY, backupCount=1, hotRestart=HotRestartConfig{enabled=false, fsync=false}, wanReplicationRef=null}
+2023-05-05 14:01:16.549  INFO 10696 --- [restartedMain] com.hazelcast.cache.impl.CacheService    : [192.168.1.226]:5701 [dev] [4.2.4] Removed cache config: CacheConfig{name='login', managerPrefix='/hz/file:/C:/Users/felipe.silva/ROBOS/lite/target/classes/hazelcast.xml/org.springframework.boot.devtools.restart.classloader.RestartClassLoader@71d2b13c/', inMemoryFormat=BINARY, backupCount=1, hotRestart=HotRestartConfig{enabled=false, fsync=false}, wanReplicationRef=null}
+2023-05-05 14:01:16.550  INFO 10696 --- [restartedMain] com.hazelcast.cache.impl.CacheService    : [192.168.1.226]:5701 [dev] [4.2.4] Removed cache config: CacheConfig{name='user', managerPrefix='/hz/file:/C:/Users/felipe.silva/ROBOS/lite/target/classes/hazelcast.xml/org.springframework.boot.devtools.restart.classloader.RestartClassLoader@71d2b13c/', inMemoryFormat=BINARY, backupCount=1, hotRestart=HotRestartConfig{enabled=false, fsync=false}, wanReplicationRef=null}
+2023-05-05 14:01:16.550  INFO 10696 --- [restartedMain] com.hazelcast.cache.impl.CacheService    : [192.168.1.226]:5701 [dev] [4.2.4] Removed cache config: CacheConfig{name='buckets', managerPrefix='/hz/file:/C:/Users/felipe.silva/ROBOS/lite/target/classes/hazelcast.xml/org.springframework.boot.devtools.restart.classloader.RestartClassLoader@71d2b13c/', inMemoryFormat=BINARY, backupCount=1, hotRestart=HotRestartConfig{enabled=false, fsync=false}, wanReplicationRef=null}
+2023-05-05 14:01:16.550  INFO 10696 --- [restartedMain] com.hazelcast.cache.impl.CacheService    : [192.168.1.226]:5701 [dev] [4.2.4] Removed cache config: CacheConfig{name='cota', managerPrefix='/hz/file:/C:/Users/felipe.silva/ROBOS/lite/target/classes/hazelcast.xml/org.springframework.boot.devtools.restart.classloader.RestartClassLoader@71d2b13c/', inMemoryFormat=BINARY, backupCount=1, hotRestart=HotRestartConfig{enabled=false, fsync=false}, wanReplicationRef=null}
+2023-05-05 14:01:16.552  INFO 10696 --- [restartedMain] c.hazelcast.instance.impl.NodeExtension  : [192.168.1.226]:5701 [dev] [4.2.4] Destroying node NodeExtension.
+2023-05-05 14:01:16.552  INFO 10696 --- [restartedMain] com.hazelcast.instance.impl.Node         : [192.168.1.226]:5701 [dev] [4.2.4] Hazelcast Shutdown is completed in 5 ms.
+2023-05-05 14:01:16.553  INFO 10696 --- [restartedMain] com.hazelcast.core.LifecycleService      : [192.168.1.226]:5701 [dev] [4.2.4] [192.168.1.226]:5701 is SHUTDOWN
+2023-05-05 14:01:16.553  INFO 10696 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2023-05-05 14:01:16.571  INFO 10696 --- [restartedMain] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-05-05 14:01:16.598 ERROR 10696 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.boot.autoconfigure.mail.MailSenderValidatorAutoConfiguration': Bean instantiation via constructor failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.boot.autoconfigure.mail.MailSenderValidatorAutoConfiguration]: Constructor threw exception; nested exception is java.lang.IllegalStateException: Mail server is not available
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:315) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:296) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1372) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1222) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:953) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:918) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145) ~[spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:740) ~[spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:415) ~[spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:303) ~[spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1312) ~[spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1301) ~[spring-boot-2.6.4.jar:2.6.4]
+	at com.bats.lite.LiteApplication.main(LiteApplication.java:25) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) ~[spring-boot-devtools-2.7.5.jar:2.7.5]
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.boot.autoconfigure.mail.MailSenderValidatorAutoConfiguration]: Constructor threw exception; nested exception is java.lang.IllegalStateException: Mail server is not available
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:224) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:117) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:311) ~[spring-beans-5.3.16.jar:5.3.16]
+	... 24 common frames omitted
+Caused by: java.lang.IllegalStateException: Mail server is not available
+	at org.springframework.boot.autoconfigure.mail.MailSenderValidatorAutoConfiguration.validateConnection(MailSenderValidatorAutoConfiguration.java:54) ~[spring-boot-autoconfigure-2.6.4.jar:2.6.4]
+	at org.springframework.boot.autoconfigure.mail.MailSenderValidatorAutoConfiguration.<init>(MailSenderValidatorAutoConfiguration.java:46) ~[spring-boot-autoconfigure-2.6.4.jar:2.6.4]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480) ~[na:na]
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:211) ~[spring-beans-5.3.16.jar:5.3.16]
+	... 26 common frames omitted
+Caused by: javax.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not accepted. Learn more at
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 18-20020a05620a079200b0074df70197a6sm697553qka.109 - gsmtp
+
+	at com.sun.mail.smtp.SMTPTransport$Authenticator.authenticate(SMTPTransport.java:947) ~[jakarta.mail-1.6.7.jar:1.6.7]
+	at com.sun.mail.smtp.SMTPTransport.authenticate(SMTPTransport.java:858) ~[jakarta.mail-1.6.7.jar:1.6.7]
+	at com.sun.mail.smtp.SMTPTransport.protocolConnect(SMTPTransport.java:762) ~[jakarta.mail-1.6.7.jar:1.6.7]
+	at javax.mail.Service.connect(Service.java:342) ~[jakarta.mail-1.6.7.jar:1.6.7]
+	at org.springframework.mail.javamail.JavaMailSenderImpl.connectTransport(JavaMailSenderImpl.java:518) ~[spring-context-support-5.3.16.jar:5.3.16]
+	at org.springframework.mail.javamail.JavaMailSenderImpl.testConnection(JavaMailSenderImpl.java:398) ~[spring-context-support-5.3.16.jar:5.3.16]
+	at org.springframework.boot.autoconfigure.mail.MailSenderValidatorAutoConfiguration.validateConnection(MailSenderValidatorAutoConfiguration.java:51) ~[spring-boot-autoconfigure-2.6.4.jar:2.6.4]
+	... 33 common frames omitted
+

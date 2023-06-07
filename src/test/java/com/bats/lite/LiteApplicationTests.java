@@ -8,6 +8,7 @@ class LiteApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }

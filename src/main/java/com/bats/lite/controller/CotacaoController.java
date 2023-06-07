@@ -4,8 +4,8 @@ import com.bats.lite.configuration.FilesConfig;
 import com.bats.lite.entity.Cotacao;
 import com.bats.lite.service.CotacaoService;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -21,7 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/cotacao")
-@Api("Feign de api de cotacao")
+@Tag(name = "Feign de api de cotacao")
 @CacheConfig(cacheNames = "cota")
 public class CotacaoController {
 
@@ -32,7 +32,7 @@ public class CotacaoController {
 
     @Cacheable
     @GetMapping("/arquivo")
-    @ApiOperation("Regasta as cotação de acordo com as moedas informadas")
+    @Operation(summary = "Regasta as cotação de acordo com as moedas informadas")
     public Object cotacaoList() {
         var file = cotacaoService.currency();
         return ResponseEntity.ok().body(file);
@@ -40,14 +40,14 @@ public class CotacaoController {
 
     @Cacheable
     @GetMapping("date")
-    @ApiOperation("Traz lista de cotacoes do dia de acordo com moeda e dias")
+    @Operation(summary = "Traz lista de cotacoes do dia de acordo com moeda e dias")
     public List<Cotacao> cotacoaPorData(@RequestParam(value = "days", defaultValue = "7") int days) {
         return cotacaoService.perDate(days);
     }
 
     @Cacheable
     @GetMapping("between-dates")
-    @ApiOperation("Traz lista de itens de acordo com quantidade e entre datas")
+    @Operation(summary = "Traz lista de itens de acordo com quantidade e entre datas")
     public List<Cotacao> cotacaoEntreDatas(@RequestParam(value = "days", defaultValue = "7") int days,
                                            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @JsonFormat(pattern = "yyyy-MM-dd")
                                            LocalDate dataInicial,
